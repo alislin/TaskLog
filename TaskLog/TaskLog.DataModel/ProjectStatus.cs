@@ -14,6 +14,10 @@
         /// </summary>
         Openning,
         /// <summary>
+        /// 挂起
+        /// </summary>
+        Halt,
+        /// <summary>
         /// 关闭
         /// </summary>
         Closed,

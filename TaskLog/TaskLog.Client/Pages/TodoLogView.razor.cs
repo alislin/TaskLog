@@ -5,7 +5,7 @@
 using TaskLog.DataModel;
 using Thunder.Blazor.Components;
 
-namespace TaskLog.Pages
+namespace TaskLog.Client.Pages
 {
     public class TodoLogViewBase : TComponent<TodoLogContext>
     {

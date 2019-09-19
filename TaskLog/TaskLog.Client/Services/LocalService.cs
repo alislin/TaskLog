@@ -3,19 +3,22 @@
 // </copyright>
 
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using TaskLog.DataModel;
 
-namespace TaskLog.Services
+namespace TaskLog.Client.Services
 {
     public class LocalService
     {
-        public LocalService(ILocalStorageService localStorage)
+        public LocalService(ILocalStorageService localStorage, NavigationManager navHelper)
         {
             LocalStorage = localStorage;
+            NavHelper = navHelper;
         }
 
-        public ILocalStorageService LocalStorage { get; set; }
+        [Inject] public ILocalStorageService LocalStorage { get; set; }
+        [Inject] public NavigationManager NavHelper { get; set; }
         /// <summary>
         /// 进行中的项目
         /// </summary>

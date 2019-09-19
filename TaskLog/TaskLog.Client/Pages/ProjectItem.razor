@@ -1,0 +1,25 @@
+﻿@inherits TComponent
+<div class="row">
+    <div class="col" @onclick="Goto">
+        <h3>@Project?.Name</h3>
+        <span>@Project?.Created</span>
+        <span>@Project?.Id</span>
+    </div>
+    <div class="col">
+        <StrapButtongroup>
+            <StrapButton CommandAction="CommandAction">编辑</StrapButton>
+            <StrapButton Style="StyleType.danger" Outline="true">删除</StrapButton>
+        </StrapButtongroup>
+    </div>
+    <div class="col"></div>
+</div>
+
+@code {
+    [Parameter] public Project Project { get; set; }
+    [Inject] LocalService local { get; set; }
+
+    void Goto(object obj)
+    {
+        local.NavHelper.NavigateTo($"/project/{Project?.Id}");
+    }
+}

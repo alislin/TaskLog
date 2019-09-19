@@ -1,0 +1,87 @@
+﻿@inherits TComponent
+<div class="form-group row">
+    <label class="col-form-label col-lg-2">Name</label>
+    <div class="col-lg-10">
+        <input type="text" class="form-control" @bind="@ProjcectName" @onkeyup="OnKeyUp" />
+    </div>
+</div>
+<div class="col">
+    <StrapButton CommandAction="UpdateValue">保存</StrapButton>
+    <StrapButton CommandAction="Reset" Style="StyleType.danger">重置</StrapButton>
+</div>
+@code {
+    [Parameter]
+    public Project Project
+    {
+        get { return project; }
+        set
+        {
+            project = value;
+            ProjcectName = project?.Name;
+        }
+    }
+
+    private TContext<ProjectEdit> DataContext { get; set; }
+
+    [Parameter] public EventCallback<Project> ProjectChanged { get; set; }
+    [Parameter] public EventCallback<Project> OnConfirm { get; set; }
+    string ProjcectName;
+    Project project;
+
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            DataContext = GetContextParameter<ProjectEdit>(null);
+            Project = DataContext?.View?.Project;
+            if (DataContext?.View?.OnConfirm != null)
+            {
+                OnConfirm = DataContext.View.OnConfirm;
+            }
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+    private void OnKeyUp(KeyboardEventArgs key)
+    {
+        Console.WriteLine(key.Key);
+        if (key.Key == "Enter")
+        {
+            UpdateValue();
+        }
+    }
+
+    private async void UpdateValue()
+    {
+        if (string.IsNullOrWhiteSpace(ProjcectName))
+        {
+            return;
+        }
+        if (project == null)
+        {
+            project = new Project(ProjcectName);
+        }
+        else
+        {
+            project.Name = ProjcectName;
+        }
+        if (string.IsNullOrWhiteSpace(project.Id))
+        {
+            project.Id = project.MakeId();
+        }
+        await ProjectChanged.InvokeAsync(Project);
+        await OnConfirm.InvokeAsync(project);
+        Project = null;
+        //Updkate();
+    }
+
+    private void Reset()
+    {
+        Project = null;
+    }
+}

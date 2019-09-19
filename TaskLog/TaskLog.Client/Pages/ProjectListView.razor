@@ -1,0 +1,22 @@
+﻿@inherits ProjectListViewBase
+<h3>ProjectListView</h3>
+<StrapButton CommandAction="Add">新增</StrapButton>
+<ProjectEdit @ref="pEdit" OnConfirm="UpdateProject"></ProjectEdit>
+
+@if ((dataContext?.Projects?.Count ?? 0) > 0)
+{
+    foreach (var item in dataContext.Projects)
+    {
+        var v = item;
+        Action edit = () =>
+        {
+            pEdit.Project = v;
+            Update();
+        };
+        <ProjectItem Project="item" CommandAction="edit"></ProjectItem>
+    }
+}
+
+@code{
+    ProjectEdit pEdit;
+}
