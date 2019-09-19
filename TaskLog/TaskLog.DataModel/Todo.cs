@@ -7,7 +7,7 @@ namespace TaskLog.DataModel
     /// </summary>
     public class Todo : TodoBase, IProjectBase
     {
-        public Todo()
+        public Todo() : base()
         {
         }
 

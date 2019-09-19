@@ -11,7 +11,7 @@
 </div>
 @code {
     [Parameter]
-    public Project Project
+    public TodoBase Project
     {
         get { return project; }
         set
@@ -21,19 +21,19 @@
         }
     }
 
-    private TContext<ProjectEdit> DataContext { get; set; }
+    private TContext<TodoBaseEdit> DataContext { get; set; }
 
-    [Parameter] public EventCallback<Project> ProjectChanged { get; set; }
-    [Parameter] public EventCallback<Project> OnConfirm { get; set; }
+    [Parameter] public EventCallback<TodoBase> ProjectChanged { get; set; }
+    [Parameter] public EventCallback<TodoBase> OnConfirm { get; set; }
     string ProjcectName;
-    Project project;
+    TodoBase project;
 
 
     protected override void OnInitialized()
     {
         try
         {
-            DataContext = GetContextParameter<ProjectEdit>(null);
+            DataContext = GetContextParameter<TodoBaseEdit>(null);
             Project = DataContext?.View?.Project;
             if (DataContext?.View?.OnConfirm != null)
             {

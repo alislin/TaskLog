@@ -9,55 +9,57 @@ using System.Linq;
 using TaskLog.DataModel;
 using Thunder.Blazor.Components;
 using Microsoft.AspNetCore.Components.Web;
+using TaskLog.Client.Services;
 
 namespace TaskLog.Client.Pages
 {
     public class ProjectListViewBase : TComponent<ProjectListContext>
     {
+        [Inject] LocalService local { get; set; }
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            dataContext.Projects.Add(new Project("项目1"));
-            dataContext.Projects.Add(new Project("项目2"));
-            dataContext.Projects.Add(new Project("项目3"));
+
+            ComponentService.OnMessage += (o, e) =>
+            {
+                if (e == local.Storage.MessageType)
+                {
+                    Update();
+                }
+            };
+
+            dataContext.Projects = local.Storage.Projects;
         }
 
-        public void UpdateProject(Project project)
+        public void UpdateValue(TodoBase project)
         {
             if (project == null)
             {
                 return;
             }
-            var p = dataContext.Projects.FirstOrDefault(x => x.Id == project.Id);
-            if (p == null)
-            {
-                dataContext.Projects.Add(project);
-            }
-            else
-            {
-                p = project;
-            }
-            dataContext.UpdateProject = null;
-            Update();
+
+            local.Storage.Update(project.To<Project>());
+            //dataContext.Projects = local.Storage.Projects;
+
+            //Update();
         }
 
         public void Add()
         {
-            var pe = new ProjectEdit();
-            pe.Project = new Project() { Name = "新项目名称", Created = DateTime.Now };
-            pe.OnConfirm = EventCallback.Factory.Create<Project>(this, e=> {
-                UpdateProject(e);
+            var pe = new TodoBaseEdit();
+            //pe.Project = new Project() { Name = "新项目名称", Created = DateTime.Now };
+            pe.OnConfirm = EventCallback.Factory.Create<TodoBase>(this, e=> {
+                UpdateValue(e);
                 CloseModal();
             }); 
 
 
-            ShowModal(new TContext<ProjectEdit>(pe));
+            ShowModal(new TContext<TodoBaseEdit>(pe));
         }
     }
 
     public class ProjectListContext : TContext
     {
         public List<Project> Projects { get; set; } = new List<Project>();
-        public Project UpdateProject { get; set; }
     }
 }

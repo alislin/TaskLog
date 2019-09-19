@@ -12,4 +12,7 @@ namespace TaskLog.Pages
 {
     [Route("/")]
     public class Index : TaskLog.Client.Pages.Index { }
+
+    [Route("/project/{Id}")]
+    public class Project : TaskLog.Client.Pages.ProjectDetail { }
 }

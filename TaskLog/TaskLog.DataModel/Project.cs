@@ -25,7 +25,7 @@ namespace TaskLog.DataModel
         {
         }
 
-        public Project()
+        public Project():base()
         {
         }
     }

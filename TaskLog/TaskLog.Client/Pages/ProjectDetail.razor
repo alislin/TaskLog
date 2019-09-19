@@ -1,7 +1,7 @@
 ﻿@page "/project/{Id}"
 @inherits ProjectDetailBase
 <h3>@Id</h3>
-<ProjectEdit @ref="pEdit" OnConfirm="UpdateProject"></ProjectEdit>
+<TodoBaseEdit @ref="pEdit" OnConfirm="UpdateValue"></TodoBaseEdit>
 @if ((dataContext?.Todos?.Count ?? 0) > 0)
 {
     foreach (var item in dataContext.Todos)
@@ -12,10 +12,10 @@
             pEdit.Project = v;
             Update();
         };
-        <ProjectItem Project="item" CommandAction="edit"></ProjectItem>
+        <TodoItem Item="item" CommandAction="edit"></TodoItem>
     }
 }
 
 @code {
-    ProjectEdit pEdit;
+    TodoBaseEdit pEdit;
 }

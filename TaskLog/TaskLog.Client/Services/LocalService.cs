@@ -5,34 +5,32 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TaskLog.Client.Data;
 using TaskLog.DataModel;
+using Thunder.Blazor.Services;
 
 namespace TaskLog.Client.Services
 {
     public class LocalService
     {
-        public LocalService(ILocalStorageService localStorage, NavigationManager navHelper)
+       public LocalService(ILocalStorageService localStorage, NavigationManager navHelper,ComponentService comService)
         {
             LocalStorage = localStorage;
             NavHelper = navHelper;
+            ComponentService = comService;
+            Init();
         }
 
         [Inject] public ILocalStorageService LocalStorage { get; set; }
         [Inject] public NavigationManager NavHelper { get; set; }
-        /// <summary>
-        /// 进行中的项目
-        /// </summary>
-        public List<Project> Projects { get; } = new List<Project>();
-        /// <summary>
-        /// 日志（读取最近一个月）
-        /// </summary>
-        public List<DayLog> DayLogs { get; set; } = new List<DayLog>();
-        public List<Todo> Todos { get; set; } = new List<Todo>();
-        public List<TodoLog> TodoLogs { get; set; } = new List<TodoLog>();
-        /// <summary>
-        /// 已经关闭的项目，默认不加载
-        /// </summary>
-        public List<Project> ClosedProjects { get; } = new List<Project>();
+        [Inject] public ComponentService ComponentService { get; set; }
 
-    }
+        public Storage Storage { get; set; }
+
+        public void Init()
+        {
+            Storage = new Storage(LocalStorage, ComponentService.SendMessage);
+        }
+   }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TaskLog.DataModel
 {
@@ -7,6 +8,14 @@ namespace TaskLog.DataModel
     /// </summary>
     public class TodoLog : IProjectBase, ICreated
     {
+        /// <summary>
+        /// 标识KEY
+        /// </summary>
+        public string Key { get; set; }
+        /// <summary>
+        /// 创建人
+        /// </summary>
+        public string Creator { get; set; }
         /// <summary>
         /// 项目Id ({项目名称}_{启动年月日})
         /// </summary>
@@ -23,5 +32,14 @@ namespace TaskLog.DataModel
         /// 完成报告
         /// </summary>
         public string Report { get; set; }
+
+        public virtual void Update(TodoLog todo)
+        {
+            if (todo == null)
+            {
+                return;
+            }
+            Report = todo.Report;
+        }
     }
 }

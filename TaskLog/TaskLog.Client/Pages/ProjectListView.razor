@@ -1,7 +1,7 @@
 ﻿@inherits ProjectListViewBase
 <h3>ProjectListView</h3>
 <StrapButton CommandAction="Add">新增</StrapButton>
-<ProjectEdit @ref="pEdit" OnConfirm="UpdateProject"></ProjectEdit>
+<TodoBaseEdit @ref="pEdit" OnConfirm="UpdateValue"></TodoBaseEdit>
 
 @if ((dataContext?.Projects?.Count ?? 0) > 0)
 {
@@ -18,5 +18,5 @@
 }
 
 @code{
-    ProjectEdit pEdit;
+    TodoBaseEdit pEdit;
 }

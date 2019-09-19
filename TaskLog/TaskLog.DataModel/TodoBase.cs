@@ -5,6 +5,14 @@ namespace TaskLog.DataModel
     public class TodoBase:IProject
     {
         /// <summary>
+        /// 标识KEY
+        /// </summary>
+        public string Key { get; set; }
+        /// <summary>
+        /// 创建人
+        /// </summary>
+        public string Creator { get; set; }
+        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime Created { get; set; }
@@ -47,9 +55,10 @@ namespace TaskLog.DataModel
 
         public TodoBase()
         {
+            Key = KeyHelper.Key;
         }
 
-        public TodoBase(string name)
+        public TodoBase(string name) : this()
         {
             Created = DateTime.Now;
             if (name != null)
@@ -59,10 +68,42 @@ namespace TaskLog.DataModel
             }
         }
 
+        public TodoBase(TodoBase todo)
+        {
+            Update(todo);
+        }
+
+        public virtual void Update(TodoBase todo)
+        {
+            if (todo == null)
+            {
+                return;
+            }
+            Key = todo.Key;
+            Creator = todo.Creator;
+            Created = todo.Created;
+            Name = todo.Name;
+            Id = todo.Id;
+            Start = todo.Start;
+            End = todo.End;
+            Plan = todo.Plan;
+            Target = todo.Target;
+            Priority = todo.Priority;
+            Point = todo.Priority;
+            EndPoint = todo.EndPoint;
+        }
+
+        public T To<T>() where T:TodoBase,new()
+        {
+            var result = new T();
+            result.Update(this);
+            return result;
+        }
     }
 
     public static class IdExtensions
     {
+
         public static string MakeId(this IProject value)
         {
             var n = value?.Name;
