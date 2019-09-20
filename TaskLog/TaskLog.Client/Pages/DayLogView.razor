@@ -1,6 +1,12 @@
 ﻿@inherits DayLogViewBase
 <h3>DayLogView</h3>
-
+@if ((dataContext?.TodoLogs?.Count() ?? 0) > 0)
+{
+    foreach (var item in dataContext.TodoLogs)
+    {
+        <TodoLogView></TodoLogView>
+    }
+}
 @code {
 
 }

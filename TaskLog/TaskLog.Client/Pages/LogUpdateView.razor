@@ -1,0 +1,20 @@
+﻿@page "/log"
+@inherits LogUpdateViewBase
+<div class="form-group row">
+    <label class="col-form-label col-lg-2">内容</label>
+    <div class="col-lg-10">
+        <textarea type="text" class="form-control" @bind="@TodoLog.Report" @onkeyup="OnKeyUp" />
+    </div>
+</div>
+<div class="col">
+    <StrapButton CommandAction="UpdateValue">保存</StrapButton>
+    @*<StrapButton CommandAction="Reset" Style="StyleType.danger">重置</StrapButton>*@
+</div>
+<EditForm Model="TodoLog">
+    <InputTextArea @bind-Value="TodoLog.Report"></InputTextArea>
+    <InputDate @bind-Value="TodoLog.Created"></InputDate>
+</EditForm>
+
+@code {
+
+}

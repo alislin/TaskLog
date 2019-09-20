@@ -1,0 +1,13 @@
+﻿@page "/daylog"
+@inherits DayLogListBase
+<h3>DayLogList</h3>
+@if ((dataContext?.DayLogs?.Count() ?? 0) > 0)
+{
+    foreach (var item in dataContext.DayLogs)
+    {
+        <DayLogView></DayLogView>
+    }
+}
+@code {
+
+}
