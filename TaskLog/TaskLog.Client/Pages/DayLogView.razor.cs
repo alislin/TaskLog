@@ -18,6 +18,6 @@ namespace TaskLog.Client.Pages
 
     public class DayLogContext : TContext
     {
-        public List<TodoLog> TodoLogs { get; set; }
+        public DayLog DayLog { get; set; }
     }
 }

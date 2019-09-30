@@ -15,5 +15,7 @@ namespace TaskLog.Client.Pages
     {
         public TodoLog TodoLog { get; set; }
         public bool IsViewed { get; set; }
+        public string ProjectName => TodoLog?.ProjcectId.GetIdName();
+        public string TodoName => TodoLog?.TodoId.GetIdName();
     }
 }

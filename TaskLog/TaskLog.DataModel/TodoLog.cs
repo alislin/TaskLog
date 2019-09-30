@@ -6,7 +6,7 @@ namespace TaskLog.DataModel
     /// <summary>
     /// 待办日志
     /// </summary>
-    public class TodoLog : IProjectBase, ICreated
+    public class TodoLog : NotifyUpdate, IProjectBase, ICreated
     {
         /// <summary>
         /// 标识KEY
@@ -27,7 +27,7 @@ namespace TaskLog.DataModel
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
         /// <summary>
         /// 完成报告
         /// </summary>

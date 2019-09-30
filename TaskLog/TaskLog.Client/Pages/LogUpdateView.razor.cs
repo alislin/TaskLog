@@ -22,11 +22,11 @@ namespace TaskLog.Client.Pages
             Console.WriteLine(key.Key);
             if (key.CtrlKey && key.Key == "Enter")
             {
-                UpdateValue();
+                UpdateValue(null);
             }
         }
 
-        protected void UpdateValue()
+        protected void UpdateValue(object obj)
         {
             throw new NotImplementedException();
         }

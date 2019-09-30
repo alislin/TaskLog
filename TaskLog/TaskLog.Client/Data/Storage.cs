@@ -39,6 +39,7 @@ namespace TaskLog.Client.Data
         public List<DayLog> DayLogs { get; set; } = new List<DayLog>();
         public List<Todo> Todos { get; set; } = new List<Todo>();
         public ArchiveData ArchiveData { get; set; } = new ArchiveData();
+        public OperatorUser Operator { get; set; } = new OperatorUser { Name = "Loger" };
 
         public async Task<T> Load<T>(string key)
         {
@@ -64,7 +65,7 @@ namespace TaskLog.Client.Data
             if (DataIndex == null)
             {
                 //首次使用
-                DataIndex = new DataIndex { Key = dataIndexKey };
+                DataIndex = new DataIndex { Key = dataIndexKey, Created = DateTime.Now, Creator = Operator.Name };
                 return;
             }
 
@@ -104,6 +105,7 @@ namespace TaskLog.Client.Data
             var p = Projects.FirstOrDefault(x => x.Id == item.Id);
             if (p == null)
             {
+                Created(item);
                 Projects.Add(item);
                 DataIndex.Projects.Add(item.Key);
                 await Save(DataIndex);
@@ -130,6 +132,7 @@ namespace TaskLog.Client.Data
             var p = Todos.FirstOrDefault(x => x.Id == item.Id);
             if (p == null)
             {
+                Created(item);
                 Todos.Add(item);
                 DataIndex.Todos.Add(item.Key);
                 await Save(DataIndex);
@@ -161,12 +164,11 @@ namespace TaskLog.Client.Data
                 //创建新的日期
                 var daylog = new DayLog
                 {
-                    Creator = "",
-                    Created = DateTime.Now,
                     Date = daykey,
-                    Key = KeyHelper.Key,
                     TodoLogs = new List<TodoLog>()
                 };
+                Created(daylog);
+                Created(item);
                 daylog.TodoLogs.Add(item);
               
                 DataIndex.DayLogs.Add(daylog.Key);
@@ -180,6 +182,7 @@ namespace TaskLog.Client.Data
                 var tl = p.TodoLogs.FirstOrDefault(x => x.Key == item.Key && x.ProjcectId == item.ProjcectId && x.TodoId == item.TodoId);
                 if (tl == null)
                 {
+                    Created(item);
                     //创建新记录
                     p.TodoLogs.Add(item);
                 }
@@ -192,5 +195,14 @@ namespace TaskLog.Client.Data
             }
             //MessageAction?.Invoke(MessageType);
         }
+
+        private void Created(ICreated item)
+        {
+            item.Creator = Operator.Name;
+            item.Created = DateTime.Now;
+            item.Key = KeyHelper.Key;
+        }
+
+
     }
 }

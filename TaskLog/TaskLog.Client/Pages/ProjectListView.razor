@@ -8,7 +8,7 @@
     foreach (var item in dataContext.Projects)
     {
         var v = item;
-        Action edit = () =>
+        Action<object> edit = (obj) =>
         {
             pEdit.Project = v;
             Update();
@@ -19,4 +19,5 @@
 
 @code{
     TodoBaseEdit pEdit;
+    
 }

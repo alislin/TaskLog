@@ -1,12 +1,12 @@
 ﻿@inherits DayLogViewBase
-<h3>DayLogView</h3>
-@if ((dataContext?.TodoLogs?.Count() ?? 0) > 0)
+<h3>@DataContext?.DayLog?.Date</h3>
+@if ((dataContext?.DayLog?.TodoLogs?.Count() ?? 0) > 0)
 {
-    foreach (var item in dataContext.TodoLogs)
+    foreach (var item in dataContext.DayLog.TodoLogs)
     {
-        <TodoLogView></TodoLogView>
+        var todolog = new TodoLogContext { TodoLog = item };
+        <TodoLogView DataContext="todolog"></TodoLogView>
     }
 }
 @code {
-
 }

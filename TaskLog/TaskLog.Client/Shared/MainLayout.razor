@@ -1,13 +1,48 @@
 ﻿@inherits LayoutComponentBase
 
-@*<div class="sidebar">
-    <NavMenu />
-</div>*@
+<div class="page-content">
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="d-md-flex align-items-md-start">
+                <div class="sidebar sidebar-light sidebar-component sidebar-component-left bg-transparent border-0 shadow-0 sidebar-expand-md">
 
-<div class="main">
+                    <!-- Sidebar content -->
+                    <div class="sidebar-content">
 
-    <div class="content px-4">
-        @Body
+                        <!-- Sidebar search -->
+                        <div class="card">
+                            <div class="card-header bg-transparent header-elements-inline">
+                                <span class="text-uppercase font-size-sm font-weight-semibold">Search</span>
+                                <div class="header-elements">
+                                    <div class="list-icons">
+                                        <a class="list-icons-item" data-action="collapse"></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <form action="#">
+                                    <div class="form-group-feedback form-group-feedback-right">
+                                        <input type="search" class="form-control" placeholder="Search">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-search4 font-size-base text-muted"></i>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /sidebar search -->
+
+                    </div>
+                    <!-- /sidebar content -->
+                </div>
+                <div class="w-100 h-100">
+                    <div class="card">
+                        @Body
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <StrapModal></StrapModal>

@@ -6,7 +6,7 @@ namespace TaskLog.DataModel
     /// <summary>
     /// 日志
     /// </summary>
-    public class DayLog : ICreated
+    public class DayLog :NotifyUpdate, ICreated
     {
         /// <summary>
         /// 标识KEY

@@ -52,11 +52,11 @@
         Console.WriteLine(key.Key);
         if (key.Key == "Enter")
         {
-            UpdateValue();
+            UpdateValue(null);
         }
     }
 
-    private async void UpdateValue()
+    private async void UpdateValue(object obj)
     {
         if (string.IsNullOrWhiteSpace(ProjcectName))
         {
@@ -80,7 +80,7 @@
         //Updkate();
     }
 
-    private void Reset()
+    private void Reset(object obj)
     {
         Project = null;
     }

@@ -44,7 +44,7 @@ namespace TaskLog.Client.Pages
             //Update();
         }
 
-        public void Add()
+        public void Add(object obj)
         {
             var pe = new TodoBaseEdit();
             //pe.Project = new Project() { Name = "新项目名称", Created = DateTime.Now };

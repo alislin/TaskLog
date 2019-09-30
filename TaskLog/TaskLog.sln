@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Limitless", "Limitless\Limi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thunder.Blazor", "..\..\Thunder.Blazor\Thunder.Blazor\Thunder.Blazor\Thunder.Blazor.csproj", "{112B397E-CB93-4D51-88F8-9D7B10B6532E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskLog.Client", "TaskLog.Client\TaskLog.Client.csproj", "{48B81533-253A-4906-BB98-62A5910CE9C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskLog.Client", "TaskLog.Client\TaskLog.Client.csproj", "{48B81533-253A-4906-BB98-62A5910CE9C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

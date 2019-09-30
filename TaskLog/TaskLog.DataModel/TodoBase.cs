@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace TaskLog.DataModel
 {
-    public class TodoBase:IProject
+    public class TodoBase: NotifyUpdate, IProject
     {
         /// <summary>
         /// 标识KEY
@@ -109,6 +110,21 @@ namespace TaskLog.DataModel
             var n = value?.Name;
             var t = value?.Created ?? DateTime.Now;
             return $"{n}_{t.ToString("yyyyMMdd")}";
+        }
+
+        public static string GetIdName(this string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return "未关联";
+            }
+            var regex = new Regex("(.*)_\\d{8}");
+            var m = regex.Match(id);
+            if (m.Success)
+            {
+                return m.Groups[1].Value;
+            }
+            return "未关联";
         }
     }
 

@@ -6,7 +6,7 @@ namespace TaskLog.DataModel
     /// <summary>
     /// 索引(Key)
     /// </summary>
-    public class DataIndex : ICreated
+    public class DataIndex : NotifyUpdate, ICreated
     {
         public string Key { get; set; }
         public DateTime Created { get; set; }
@@ -39,9 +39,9 @@ namespace TaskLog.DataModel
     /// <summary>
     /// Key 生成助手
     /// </summary>
-    public class KeyHelper
+    public static class KeyHelper
     {
-        public static Random RndKey = new Random(DateTime.Now.Millisecond);
+        public static Random RndKey { get; set; } = new Random(DateTime.Now.Millisecond);
         public static string Key => $"{DateTime.Now.ToFileTimeUtc()}{RndKey.Next(99999999).ToString("00000000")}";
     }
 }

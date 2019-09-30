@@ -38,4 +38,8 @@
     <PackageReference Include="Thunder.Blazor.Bootstrap" Version="0.1.4-alpha" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="content\js\" />
+  </ItemGroup>
+
 </Project>

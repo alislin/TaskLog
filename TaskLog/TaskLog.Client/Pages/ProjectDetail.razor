@@ -7,7 +7,7 @@
     foreach (var item in dataContext.Todos)
     {
         var v = item;
-        Action edit = () =>
+        Action<object> edit = (o) =>
         {
             pEdit.Project = v;
             Update();

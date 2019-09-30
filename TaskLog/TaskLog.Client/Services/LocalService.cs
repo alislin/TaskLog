@@ -14,7 +14,7 @@ namespace TaskLog.Client.Services
 {
     public class LocalService
     {
-       public LocalService(ILocalStorageService localStorage, NavigationManager navHelper,ComponentService comService)
+        public LocalService(ILocalStorageService localStorage, NavigationManager navHelper, ComponentService comService)
         {
             LocalStorage = localStorage;
             NavHelper = navHelper;
@@ -32,5 +32,7 @@ namespace TaskLog.Client.Services
         {
             Storage = new Storage(LocalStorage, ComponentService.SendMessage);
         }
-   }
+
+    }
+
 }
