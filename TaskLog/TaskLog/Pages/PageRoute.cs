@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace TaskLog.Pages
 {
+    [Route("/p")]
+    public class PrototypeIndex : TaskLog.Client.Prototype.Index { }
+
     [Route("/")]
     public class Index : TaskLog.Client.Pages.Index { }
 

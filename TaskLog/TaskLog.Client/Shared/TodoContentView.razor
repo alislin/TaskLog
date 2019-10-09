@@ -1,0 +1,17 @@
+﻿@inherits TComponent
+<h6 class="font-weight-semibold mt-4"><strong>@ChildContent</strong></h6>
+@if (IsShowTag)
+{
+    @if (string.IsNullOrWhiteSpace(Project))
+    {
+        <span class="badge badge-flat border-grey text-grey-600">未知分类</span>
+    }
+    else
+    {
+        <span class="badge badge-flat border-info text-info-600">@Project</span>
+    }
+}
+@code {
+    [Parameter] public bool IsShowTag { get; set; }
+    [Parameter] public string Project { get; set; }
+}

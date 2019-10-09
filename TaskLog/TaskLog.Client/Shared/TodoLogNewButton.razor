@@ -1,0 +1,10 @@
+﻿@inherits TComponent
+@using TaskLog.Client.Pages
+<StrapButton Style="StyleType.none" CommandAction="ShowTodoLogEdit"><i class="icon-add icon-1x" title="New log"></i></StrapButton>
+
+@code {
+    void ShowTodoLogEdit(object obj)
+    {
+        ShowModal(new TContext<TodoLogEdit> { Caption = "编辑日志" }, null, o => { StateHasChanged(); });
+    }
+}

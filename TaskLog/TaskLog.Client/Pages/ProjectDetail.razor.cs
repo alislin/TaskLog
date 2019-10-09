@@ -23,7 +23,7 @@ namespace TaskLog.Client.Pages
             base.OnInitialized();
             ComponentService.OnMessage += (o, e) =>
             {
-                if (e == local.Storage.MessageType)
+                if (e == local.Storage.MessageTypeUpdate)
                 {
                     Update();
                 }

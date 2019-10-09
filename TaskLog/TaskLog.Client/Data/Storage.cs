@@ -15,7 +15,7 @@ namespace TaskLog.Client.Data
     {
         private string dataIndexKey = "dataindex";
 
-        public string MessageType = "update";
+        public string MessageTypeUpdate = "update";
 
         public Storage(ILocalStorageService localStorage, Action<string> messageAction) 
         {
@@ -88,7 +88,7 @@ namespace TaskLog.Client.Data
                 DayLogs.Add(dat);
             }
 
-            MessageAction?.Invoke(MessageType);
+            MessageAction?.Invoke(MessageTypeUpdate);
         }
 
         /// <summary>

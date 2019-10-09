@@ -1,24 +1,47 @@
-﻿@page "/p/index"
-    <div class="card-header header-elements-inline">
-        <h5 class="card-title">Today</h5>
-        <div class="header-elements">
-            <div class="list-icons">
-                <a class="list-icons-item" data-action="collapse"></a>
-                <a class="list-icons-item" data-action="reload"></a>
-                <a class="list-icons-item" data-action="remove"></a>
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <h6 class="font-weight-semibold">Start your development with no hassle!</h6>
-        <p class="mb-3">Common problem of templates is that all code is deeply integrated into the core. This limits your freedom in decreasing amount of code, i.e. it becomes pretty difficult to remove unnecessary code from the project. Limitless allows you to remove unnecessary and extra code easily just by removing the path to specific LESS file with component styling. All plugins and their options are also in separate files. Use only components you actually need!</p>
+﻿@page "/p"
+<CardView>
+    <Header>
+        <h5 class="m-0">Today<i class="icon-pencil3 ml-2" title="Edit"></i></h5>
+    </Header>
+    <Body>
+        <TodoContentView IsShowTag="true">未分类记录</TodoContentView>
+        <LogContentView>服务器负载到达瓶颈，讨论服务器分离和迁移方案。确定将数据库单独迁移到新服务器上。准备新服务器环境。</LogContentView>
+        <LogContentView>系统维护工具在修改学生（老生）状态时，不能默认处理19-20学年的数据。针对这个情况对系统维护工具进行调整。</LogContentView>
+        <LogContentView>招生报名记录中通过网络报名的学生未分配状态的处理，编写程序来处理这部分学生。已经录取的学生按照录取人进行指派。未录取的学生按照过期处理。</LogContentView>
+        <TodoContentView IsShowTag="true" Project="系统运维工作">保障招生系统正常运行，使用需求收集，问题反馈收集，协调开发进行问题处理。</TodoContentView>
+        <LogContentView>Common problem of templates is that all code is deeply integrated into the core. This limits your freedom in decreasing amount of code, i.e. it becomes pretty difficult to remove unnecessary code from the project. Limitless allows you to remove unnecessary and extra code easily just by removing the path to specific LESS file with component styling. All plugins and their options are also in separate files. Use only components you actually need!</LogContentView>
+        <LogContentView>Common problem of templates is that all code is deeply integrated into the core. This limits your freedom in decreasing amount of code, i.e. it becomes pretty difficult to remove unnecessary code from the project. Limitless allows you to remove unnecessary and extra code easily just by removing the path to specific LESS file with component styling. All plugins and their options are also in separate files. Use only components you actually need!</LogContentView>
+        <LogContentView>Common problem of templates is that all code is deeply integrated into the core. This limits your freedom in decreasing amount of code, i.e. it becomes pretty difficult to remove unnecessary code from the project. Limitless allows you to remove unnecessary and extra code easily just by removing the path to specific LESS file with component styling. All plugins and their options are also in separate files. Use only components you actually need!</LogContentView>
 
-        <h6 class="font-weight-semibold">What is this?</h6>
-        <p class="mb-3">Starter kit is a set of pages, useful for developers to start development process from scratch. Each layout includes base components only: layout, page kits, color system which is still optional, bootstrap files and bootstrap overrides. No extra CSS/JS files and markup. CSS files are compiled without any plugins or components. Starter kit was moved to a separate folder for better accessibility.</p>
+        <TodoContentView IsShowTag="true" Project="招生系统">What is this?</TodoContentView>
+        <LogContentView>Starter kit is a set of pages, useful for developers to start development process from scratch. Each layout includes base components only: layout, page kits, color system which is still optional, bootstrap files and bootstrap overrides. No extra CSS/JS files and markup. CSS files are compiled without any plugins or components. Starter kit was moved to a separate folder for better accessibility.</LogContentView>
 
-        <h6 class="font-weight-semibold">How does it work?</h6>
-        <p>You open one of the starter pages, add necessary plugins, uncomment paths to files in components.less file, compile new CSS. That's it. I'd also recommend to open one of main pages with functionality you need and copy all paths/JS code from there to your new page, it's just faster and easier.</p>
-    </div>
+        <TodoContentView IsShowTag="true" Project="人事调研">如何工作?</TodoContentView>
+        <LogContentView>You open one of the starter pages, add necessary plugins, uncomment paths to files in components.less file, compile new CSS. That's it. I'd also recommend to open one of main pages with functionality you need and copy all paths/JS code from there to your new page, it's just faster and easier.</LogContentView>
+    </Body>
+</CardView>
+<CardView>
+    <Header>
+        <h5>系统运维工作<i class="icon-pencil3 ml-2" title="Edit"></i></h5>
+    </Header>
+    <Body>
+        <TodoContentView>系统数据备份检查，招生系统后续数据处理</TodoContentView>
+        <LogContentView>服务器负载到达瓶颈，讨论服务器分离和迁移方案。确定将数据库单独迁移到新服务器上。准备新服务器环境。</LogContentView>
+        <LogContentView>系统维护工具在修改学生（老生）状态时，不能默认处理19-20学年的数据。针对这个情况对系统维护工具进行调整。</LogContentView>
+        <LogContentView>招生报名记录中通过网络报名的学生未分配状态的处理，编写程序来处理这部分学生。已经录取的学生按照录取人进行指派。未录取的学生按照过期处理。</LogContentView>
+
+        <TodoContentView>系统数据备份检查，招生系统后续数据处理</TodoContentView>
+        <LogContentView>服务器负载到达瓶颈，讨论服务器分离和迁移方案。确定将数据库单独迁移到新服务器上。准备新服务器环境。</LogContentView>
+        <LogContentView>系统维护工具在修改学生（老生）状态时，不能默认处理19-20学年的数据。针对这个情况对系统维护工具进行调整。</LogContentView>
+        <LogContentView>招生报名记录中通过网络报名的学生未分配状态的处理，编写程序来处理这部分学生。已经录取的学生按照录取人进行指派。未录取的学生按照过期处理。</LogContentView>
+
+        <TodoContentView>系统数据备份检查，招生系统后续数据处理</TodoContentView>
+        <LogContentView>服务器负载到达瓶颈，讨论服务器分离和迁移方案。确定将数据库单独迁移到新服务器上。准备新服务器环境。</LogContentView>
+        <LogContentView>系统维护工具在修改学生（老生）状态时，不能默认处理19-20学年的数据。针对这个情况对系统维护工具进行调整。</LogContentView>
+        <LogContentView>招生报名记录中通过网络报名的学生未分配状态的处理，编写程序来处理这部分学生。已经录取的学生按照录取人进行指派。未录取的学生按照过期处理。</LogContentView>
+
+    </Body>
+</CardView>
 @code {
 
 }

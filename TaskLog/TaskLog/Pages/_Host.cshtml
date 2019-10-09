@@ -10,9 +10,19 @@
     <title>TaskLog</title>
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="_content/Limitless/css/animate.min.css">
+    <link rel="stylesheet" href="_content/Limitless/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="_content/Limitless/css/icomoon/styles.css">
+    <link rel="stylesheet" href="_content/Limitless/css/limitless/bootstrap.min.css">
+    <link rel="stylesheet" href="_content/Limitless/css/limitless/bootstrap_limitless.min.css">
+    <link rel="stylesheet" href="_content/Limitless/css/limitless/colors.min.css">
+    <link rel="stylesheet" href="_content/Limitless/css/limitless/components.min.css">
+    <link rel="stylesheet" href="_content/Limitless/css/limitless/layout.min.css">
+    <link rel="stylesheet" href="_content/Limitless/css/open-iconic/font/css/open-iconic-bootstrap.min.css">
+    @*<link rel="stylesheet" href="_content/Thunder.Blazor.Bootstrap/bootstrap.min.css">*@
     @*<link href="css/site.css" rel="stylesheet" />*@
 </head>
-<body>
+<body class="navbar-bottom">
     <app>
         @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
     </app>
