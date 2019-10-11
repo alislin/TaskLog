@@ -1,25 +1,56 @@
-﻿@inherits TComponent
-<div class="row">
-    <div class="col" @onclick="Goto">
-        <h3>@Project?.Name</h3>
-        <span>@Project?.Created</span>
-        <span>@Project?.Id</span>
+﻿@inherits ProjectItemBase
+<dt>
+    <div class="row">
+        <div class="col">
+            <StrapActionItem CommandAction="Goto" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
+                <strong title="创建时间：@Project?.Created">@Project?.Name</strong>
+            </StrapActionItem>
+        </div>
+        <div class="col-1 text-right align-top">
+            @if (Project.Id != "0")
+            {
+                if (Todos.Count == 0)
+                {
+                    <StrapActionItem CommandAction="o => Delete(Project)" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
+                        <i class="icon-trash" title="Delete Project"></i>
+                    </StrapActionItem>
+                }
+                <StrapActionItem CommandAction="o => EnterEditMode(1, null)" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
+                    <i class="icon-file-plus" title="New Item"></i>
+                </StrapActionItem>
+            }
+        </div>
     </div>
-    <div class="col">
-        <StrapButtongroup>
-            <StrapButton CommandAction="CommandAction">编辑</StrapButton>
-            <StrapButton Style="StyleType.danger" Outline="true">删除</StrapButton>
-        </StrapButtongroup>
-    </div>
-    <div class="col"></div>
-</div>
+</dt>
+<dd>
+    <ul class="list list-unstyled mb-0 ml-2">
+        @foreach (var item in Todos)
+        {
+            var todo = item;
+            <li>
+                <div class="row">
+                    <div class="col">
+                        @if (EditMode == 2 && EditKey==todo.Key)
+                        {
+                            <TextEdit Text="@item.Name" Confirm="UpdateTodo" Exit="ExitEditMode" Key="@todo.Key"></TextEdit>
+                        }
+                        else
+                        {
+                            <div @ondblclick="@(o => EnterEditMode(2,todo.Key))">@item.Name</div>
+                        }
+                    </div>
+                    <div class="col-1 text-right align-top">
+                        <StrapActionItem CommandAction="o=>Delete(todo)" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
+                            <i class="icon-file-minus" title="Delete Item"></i>
+                        </StrapActionItem>
+                    </div>
+                </div>
+            </li>
+        }
+        @if (EditMode == 1 && string.IsNullOrWhiteSpace(EditKey))
+        {
+            <li><TextEdit Confirm="AddTodo" Exit="ExitEditMode" Key="@Project?.Key"></TextEdit></li>
+        }
 
-@code {
-    [Parameter] public Project Project { get; set; }
-    [Inject] LocalService local { get; set; }
-
-    void Goto(object obj)
-    {
-        local.NavHelper.NavigateTo($"/project/{Project?.Id}");
-    }
-}
+    </ul>
+</dd>

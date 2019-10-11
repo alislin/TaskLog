@@ -4,93 +4,18 @@
     <div class="content-wrapper">
         <div class="content">
             <div class="d-md-flex align-items-md-start">
-                <div class="sidebar sidebar-light sidebar-component sidebar-component-left bg-transparent border-0 shadow-0 sidebar-expand-md">
-
-                    <!-- Sidebar content -->
-                    <div class="sidebar-content">
-
-                        <!-- Sidebar search -->
-                        <CardView>
-                            <Header>
-                                <span class="text-uppercase font-size-sm font-weight-semibold">Search</span>
-                                @*<div class="header-elements">
-                                    <div class="list-icons">
-                                        <a class="list-icons-item" data-action="collapse"></a>
-                                    </div>
-                                </div>*@
-                            </Header>
-                            <Body>
-                                <form action="#">
-                                    <div class="form-group-feedback form-group-feedback-right">
-                                        <input type="search" class="form-control" placeholder="Search">
-                                        <div class="form-control-feedback">
-                                            <i class="icon-search4 font-size-base text-muted"></i>
-                                        </div>
-                                    </div>
-                                </form>
-                            </Body>
-                        </CardView>
-                        <!-- /sidebar search -->
-
-                        <CardView>
-                            <Header>
-                                <h5 class="m-0">任务列表</h5>
-                                <div class="header-elements">
-                                    <div class="list-icons">
-                                        <i class="icon-file-plus" title="New Project"></i>
-                                    </div>
-                                </div>
-                            </Header>
-                            <Body>
-                                <dl class="mb-0">
-                                    <dt>系统运行</dt>
-                                    <dd>
-                                        <ul class="list list-unstyled mb-0 ml-2">
-                                            <li>服务器调整</li>
-                                            <li>存储空间清理</li>
-                                            <li>整理招生系统操作需要增加日志功能的清单</li>
-                                            <li><input type="text" class="form-control" /></li>
-                                        </ul>
-                                    </dd>
-
-                                    <dt>需求调研</dt>
-                                    <dd>
-                                        <ul class="list list-unstyled mb-0 ml-2">
-                                            <li>服务器调整</li>
-                                            <li>存储空间清理</li>
-                                            <li>整理招生系统操作需要增加日志功能的清单</li>
-                                        </ul>
-                                    </dd>
-
-                                    <dt>Malesuada porta</dt>
-                                    <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
-                                </dl>
-                            </Body>
-                        </CardView>
-
-                    </div>
-                    <!-- /sidebar content -->
-                </div>
+                <SideBar>
+                    <!-- Sidebar search -->
+                    <Search></Search>
+                    <!-- /sidebar search -->
+                    <UntypeList></UntypeList>
+                    <ProjectList></ProjectList>
+                </SideBar>
                 <div class="w-100 h-100">
                     @Body
                 </div>
             </div>
-            <div class="navbar navbar-expand-lg navbar-light fixed-bottom">
-                <div class="text-center d-lg-none w-100 row">
-                    <div class="col"><StrapButton Style="StyleType.none"><i class="icon-paragraph-justify3" title="Show side"></i></StrapButton></div>
-                    <div class="col"><TodoLogNewButton></TodoLogNewButton></div>
-                </div>
-
-                <div class="navbar-collapse collapse" id="navbar-footer">
-                    <span class="navbar-text">
-                        © 2015 - 2019. <a href="#">Log note</a> by <a href="#" target="_blank">林亚</a>
-                    </span>
-
-                    <ul class="navbar-nav ml-lg-auto">
-                        <li class="nav-item"><TodoLogNewButton></TodoLogNewButton></li>
-                    </ul>
-                </div>
-            </div>        
+            <LogFoot>© 2015 - 2019. <a href="#">Log note</a> by <a href="#" target="_blank">林亚</a></LogFoot>
         </div>
     </div>
 </div>

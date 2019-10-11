@@ -1,0 +1,26 @@
+﻿@inherits ProjectListBase
+<StrapCard>
+    <Header>
+        <h5 class="m-0">任务列表</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <StrapActionItem Style="StyleType.none" ActionItemTag="ActionItemTag.a" CommandAction="o=>EnterEditMode(null)">
+                    <i class="icon-file-plus" title="New Project"></i>
+                </StrapActionItem>
+            </div>
+        </div>
+    </Header>
+    <ChildContent>
+        <dl class="mb-0">
+            @foreach (var item in local.Storage.Projects)
+            {
+                <ProjectItem Project="item"></ProjectItem>
+            }
+            @if (EditMode == 1 && string.IsNullOrWhiteSpace(EditKey))
+            {
+                <dt><TextEdit Confirm="AddProject" Exit="ExitEditMode"></TextEdit></dt>
+                <dd></dd>
+            }
+        </dl>
+    </ChildContent>
+</StrapCard>

@@ -1,5 +1,16 @@
 ﻿@inherits TComponent
-<h6 class="font-weight-semibold mt-4"><strong>@ChildContent</strong></h6>
+    <h6 class="font-weight-semibold mt-4" title="创建时间：@Todo?.Created">
+        <strong>
+            @if (string.IsNullOrWhiteSpace(Todo?.Name))
+            {
+                @ChildContent
+            }
+            else
+            {
+                @Todo?.Name
+            }
+        </strong>
+    </h6>
 @if (IsShowTag)
 {
     @if (string.IsNullOrWhiteSpace(Project))
@@ -14,4 +25,5 @@
 @code {
     [Parameter] public bool IsShowTag { get; set; }
     [Parameter] public string Project { get; set; }
+    [Parameter] public Todo Todo { get; set; }
 }

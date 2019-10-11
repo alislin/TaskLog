@@ -1,18 +1,15 @@
 ﻿@inherits TodoLogEditBase
 <div class="form-group">
-    <textarea @bind-value="@TodoLog.Report" @bind-value:event="oninput" placeholder="输入记录内容" class="form-control" rows="5" @onkeyup="@(OnKeyUp)"></textarea>
+    <textarea @bind-value="@TodoLog.Report" @bind-value:event="oninput" placeholder="输入记录内容" class="form-control" rows="10" @onkeyup="@(OnKeyUp)"></textarea>
 </div>
 <div class="form-group">
-    <input type="text" placeholder="项目Id" class="form-control" @bind-value="TodoLog.ProjcectId" />
-</div>
-<div class="form-group">
-    <input type="text" placeholder="任务Id" class="form-control" @bind-value="TodoLog.TodoId" />
+    <ThunderSelect DataContext="TodoOption" @bind-SelectedItem="SelectedTodo" StyleClass="form-control"></ThunderSelect>
 </div>
 <div class="form-group">
     <input type="text" placeholder="创建时间" class="form-control" @bind-value="TodoLog.Created" />
 </div>
 <div class="form-group">
-    @TodoLog.Report
+    [@SelectedTodo.Text] @TodoLog.Report
 </div>
 <div class="form-group">
     <StrapButton CommandAction="UpdateValue">保存</StrapButton>

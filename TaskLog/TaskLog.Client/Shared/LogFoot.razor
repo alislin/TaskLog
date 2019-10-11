@@ -1,0 +1,25 @@
+﻿@inherits TComponent
+<FootBar>
+    <CollapsedSection>
+        <div class="row">
+            <div class="col"><StrapButton Style="StyleType.none" CommandAction="ToggleSidebar"><i class="icon-paragraph-justify3" title="Show side"></i></StrapButton></div>
+            <div class="col"><TodoLogNewButton></TodoLogNewButton></div>
+            <div class="col"><StrapButton Style="StyleType.none" CommandAction="@(o=>local.NavHelper.NavigateTo("/"))"><i class="icon-home5" title="Today"></i></StrapButton></div>
+        </div>
+    </CollapsedSection>
+    <ChildContent>
+        @ChildContent
+    </ChildContent>
+    <ButtonList>
+        <li class="nav-item"><StrapButton Style="StyleType.none" CommandAction="@(o=>local.NavHelper.NavigateTo("/"))"><i class="icon-home5" title="Today"></i></StrapButton></li>
+        <li class="nav-item"><TodoLogNewButton></TodoLogNewButton></li>
+    </ButtonList>
+</FootBar>
+@code {
+    [Inject] LocalService local { get; set; }
+    private async void ToggleSidebar(object item)
+    {
+        await local.Sidebar.Toggle();
+        return;
+    }
+}

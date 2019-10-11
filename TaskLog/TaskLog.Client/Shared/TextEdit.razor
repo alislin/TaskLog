@@ -1,0 +1,36 @@
+﻿@inherits TComponent
+<div class="input-group">
+    <textarea rows="2" type="text" autofocus class="form-control" style="white-space:normal;word-wrap:break-word;word-break:break-all" @bind-value="@Text" @bind-value:event="oninput" @onkeyup="OnKeyUp" />
+    <span class="input-group-append">
+        <span class="input-group-text pl-1 pr-1">
+            @*<StrapButton StyleClass="btn m-0 p-0" CommandAction="UpdateValue" Style="StyleType.primary"><i class="icon-checkmark2"></i></StrapButton>*@
+            <StrapButton StyleClass="btn m-0 p-0" CommandAction="Reset" Style="StyleType.danger"><i class="icon-cross3"></i></StrapButton>
+        </span>
+    </span>
+</div>
+
+@code {
+    [Parameter] public string Text { get; set; }
+    [Parameter] public string Key { get; set; }
+    /// <summary>
+    /// 确认提交
+    /// </summary>
+    [Parameter] public Action<string,string> Confirm { get; set; }
+    [Parameter] public Action Exit { get; set; }
+
+    private void OnKeyUp(KeyboardEventArgs key)
+    {
+        Console.WriteLine(key.Key);
+        if (key.Key == "Enter")
+        {
+            //UpdateValue(null);
+            Confirm?.Invoke(Text, Key);
+        }
+    }
+
+    private void Reset(object obj)
+    {
+        Text = null;
+        Exit?.Invoke();
+    }
+}

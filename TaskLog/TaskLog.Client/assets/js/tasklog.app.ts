@@ -9,6 +9,11 @@
             let body = document.getElementsByTagName("body")[0];
             body.classList.remove("sidebar-mobile-component");
         }
+
+        public toggleSidebar(): void {
+            let body = document.getElementsByTagName("body")[0];
+            body.classList.toggle("sidebar-mobile-component");
+        }
     }
 
     declare var window: Window & { ThunderBlazor: any }

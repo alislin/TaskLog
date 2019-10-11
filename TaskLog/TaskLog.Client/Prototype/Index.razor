@@ -1,9 +1,9 @@
 ﻿@page "/p"
-<CardView>
+<StrapCard>
     <Header>
         <h5 class="m-0">Today<i class="icon-pencil3 ml-2" title="Edit"></i></h5>
     </Header>
-    <Body>
+    <ChildContent>
         <TodoContentView IsShowTag="true">未分类记录</TodoContentView>
         <LogContentView>服务器负载到达瓶颈，讨论服务器分离和迁移方案。确定将数据库单独迁移到新服务器上。准备新服务器环境。</LogContentView>
         <LogContentView>系统维护工具在修改学生（老生）状态时，不能默认处理19-20学年的数据。针对这个情况对系统维护工具进行调整。</LogContentView>
@@ -18,13 +18,13 @@
 
         <TodoContentView IsShowTag="true" Project="人事调研">如何工作?</TodoContentView>
         <LogContentView>You open one of the starter pages, add necessary plugins, uncomment paths to files in components.less file, compile new CSS. That's it. I'd also recommend to open one of main pages with functionality you need and copy all paths/JS code from there to your new page, it's just faster and easier.</LogContentView>
-    </Body>
-</CardView>
-<CardView>
+    </ChildContent>
+</StrapCard>
+<StrapCard>
     <Header>
         <h5>系统运维工作<i class="icon-pencil3 ml-2" title="Edit"></i></h5>
     </Header>
-    <Body>
+    <ChildContent>
         <TodoContentView>系统数据备份检查，招生系统后续数据处理</TodoContentView>
         <LogContentView>服务器负载到达瓶颈，讨论服务器分离和迁移方案。确定将数据库单独迁移到新服务器上。准备新服务器环境。</LogContentView>
         <LogContentView>系统维护工具在修改学生（老生）状态时，不能默认处理19-20学年的数据。针对这个情况对系统维护工具进行调整。</LogContentView>
@@ -40,8 +40,8 @@
         <LogContentView>系统维护工具在修改学生（老生）状态时，不能默认处理19-20学年的数据。针对这个情况对系统维护工具进行调整。</LogContentView>
         <LogContentView>招生报名记录中通过网络报名的学生未分配状态的处理，编写程序来处理这部分学生。已经录取的学生按照录取人进行指派。未录取的学生按照过期处理。</LogContentView>
 
-    </Body>
-</CardView>
+    </ChildContent>
+</StrapCard>
 @code {
 
 }

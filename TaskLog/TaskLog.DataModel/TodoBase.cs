@@ -64,6 +64,8 @@ namespace TaskLog.DataModel
             Created = DateTime.Now;
             if (name != null)
             {
+                name = name.Replace("\r", "");
+                name = name.Replace("\n", "");
                 Name = name;
                 Id = this.MakeId();
             }
@@ -125,6 +127,12 @@ namespace TaskLog.DataModel
                 return m.Groups[1].Value;
             }
             return "未关联";
+        }
+
+        public static int GetDayId(this DateTime date)
+        {
+            var daykey = date.Year * 100 * 100 + date.Month * 100 + date.Day;
+            return daykey;
         }
     }
 

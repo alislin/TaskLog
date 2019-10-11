@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="assets\js\tasklog.app.js" />
     <None Remove="assets\js\tasklog.app.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="assets\js\tasklog.app.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +26,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Thunder.Blazor.Bootstrap" Version="1.0.0" />
+    <PackageReference Include="Thunder.Blazor.Bootstrap" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,10 +44,6 @@
       <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
     </Content>
     <Content Update="Shared\MainLayout.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
-    </Content>
-    <Content Update="Shared\NavMenu.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
     </Content>

@@ -1,0 +1,42 @@
+﻿@inherits TComponent
+@if (HasItem)
+{
+    <StrapCard>
+        <Header>
+            <h5 class="m-0">未分类日志</h5>
+        </Header>
+        <ChildContent>
+            <dl class="mb-0">
+                <ProjectItem Project="@(new Project() { Name="未知项目",Id="0", Created=DateTime.Now})"></ProjectItem>
+            </dl>
+        </ChildContent>
+    </StrapCard>
+}
+@code{
+    [Inject] LocalService local { get; set; }
+    bool HasItem => local.Storage.IndexProject.DayLogs.Count > 0 || local.Storage.IndexProject.Todos.Count > 0;
+    
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        ComponentService.OnMessage += (o, e) =>
+        {
+            if (e == local.Storage.MessageTypeUpdate)
+            {
+                Update();
+            }
+        };
+    }
+
+    //protected void Load()
+    //{
+    //    Todos = local.Storage.Todos.Where(x => local.Storage.IndexProject.Todos.Contains(x.Key)).ToList();
+    //    var daylog = local.Storage.DayLogs.Where(x => x.TodoLogs.Count(y => local.Storage.IndexProject.DayLogs.Contains(y.Key)) > 0).ToList();
+    //    daylog.ForEach(x =>
+    //    {
+    //        TodoLogs.AddRange(x.TodoLogs.Where(y => local.Storage.IndexProject.DayLogs.Contains(y.Key)));
+    //    });
+    //}
+}

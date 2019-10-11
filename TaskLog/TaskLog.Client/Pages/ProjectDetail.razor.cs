@@ -15,8 +15,17 @@ namespace TaskLog.Client.Pages
 {
     public class ProjectDetailBase : TComponent<ProjectDetailContext>
     {
+        private string id;
+
         [Inject] LocalService local { get; set; }
-        [Parameter] public string Id { get; set; }
+        [Parameter] public string Id { get => id;
+            set 
+            {
+                id = value;
+                id = id != "0" ? id : null;
+                Reload();
+            }
+        }
 
         protected override void OnInitialized()
         {
@@ -46,12 +55,18 @@ namespace TaskLog.Client.Pages
 
         public void Reload()
         {
-            dataContext.Todos = local.Storage.Todos.Where(x => x.ProjcectId == Id).ToList();
+            var data = local.Storage.LoadLogs(Id);
+            dataContext.Project = data.Project;
+            dataContext.Todos = data.Todos;
+            dataContext.TodoLogs = data.Logs;
         }
     }
 
     public class ProjectDetailContext : TContext
     {
+        public Project Project { get; set; }
         public List<Todo> Todos { get; set; } = new List<Todo>();
+        public List<TodoLog> TodoLogs { get; set; } = new List<TodoLog>();
+        public bool HasTodos => Todos.Count > 0;
     }
 }

@@ -1,0 +1,20 @@
+﻿@inherits TComponent
+<div class="navbar navbar-expand-lg navbar-light fixed-bottom border-top">
+    <div class="text-center d-lg-none w-100">
+        @CollapsedSection
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-footer">
+        <span class="navbar-text">
+            @ChildContent
+        </span>
+
+        <ul class="navbar-nav ml-lg-auto">
+            @ButtonList
+        </ul>
+    </div>
+</div>
+@code {
+    [Parameter] public RenderFragment CollapsedSection { get; set; }
+    [Parameter] public RenderFragment ButtonList { get; set; }
+}

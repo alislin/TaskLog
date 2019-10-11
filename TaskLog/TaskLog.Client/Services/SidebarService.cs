@@ -25,6 +25,11 @@ namespace TaskLog.Client.Services
         {
             await JSRuntime.InvokeAsync<object>("ThunderBlazor.tasklogApp.hideSidebar", null);
         }
+
+        public async Task Toggle()
+        {
+            await JSRuntime.InvokeAsync<object>("ThunderBlazor.tasklogApp.toggleSidebar", null);
+        }
     }
 
 }

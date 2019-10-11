@@ -1,32 +1,15 @@
-﻿@inherits TComponent
-@*@if (IsShowTag)
-{
-    <div class="row text-muted">
-        <div class="col">
-            @if (string.IsNullOrWhiteSpace(Project))
-            {
-                <span class="badge badge-flat border-grey text-grey-600">未知分类</span>
-            }
-            else
-            {
-                <span class="badge badge-flat border-info text-info-600">@Project</span>
-            }
-        </div>
-        <div class="col text-right"><i class="icon-pencil3 mr-3 icon-1x"></i> 11:16</div>
-    </div>
-}
-else
-{
-}*@
+﻿@inherits LogContentViewBase
 <div class="text-muted">
-    2019-9-30 11:16
-    <i class="icon-pencil3 ml-2"></i>
+    @(TodoLog?.Created??DateTime.Now)
+    @*<i class="icon-pencil3 ml-2"></i>*@
 </div>
 <p class="mb-1">
-    @ChildContent
+    @if (TodoLog?.Report == null)
+    {
+        @ChildContent
+    }
+    else
+    {
+        @TodoLog?.Report
+    }
 </p>
-
-@code {
-    //[Parameter] public TodoLog TodoLog { get; set; }
-
-}

@@ -1,13 +1,20 @@
 ﻿@inherits TComponent
-<div class="form-group row">
+@*<div class="form-group row">
     <label class="col-form-label col-lg-2">Name</label>
     <div class="col-lg-10">
         <input type="text" class="form-control" @bind="@ProjcectName" @onkeyup="OnKeyUp" />
     </div>
 </div>
 <div class="col">
-    <StrapButton CommandAction="UpdateValue">保存</StrapButton>
-    <StrapButton CommandAction="Reset" Style="StyleType.danger">重置</StrapButton>
+</div>*@
+<div class="input-group">
+    <input type="text" class="form-control" style="display: block;" @bind="@ProjcectName" @onkeyup="OnKeyUp" />
+    <span class="input-group-append">
+        <span class="input-group-text pl-1 pr-1">
+            @*<StrapButton StyleClass="btn m-0 p-0" CommandAction="UpdateValue" Style="StyleType.primary"><i class="icon-checkmark2"></i></StrapButton>*@
+            <StrapButton StyleClass="btn m-0 p-0" CommandAction="Reset" Style="StyleType.danger"><i class="icon-cross3"></i></StrapButton>
+        </span>
+    </span>
 </div>
 @code {
     [Parameter]
