@@ -18,4 +18,7 @@ namespace TaskLog.Pages
 
     [Route("/project/{Id}")]
     public class Project : TaskLog.Client.Pages.ProjectDetail { }
+
+    [Route("/day/{Id}")]
+    public class Day : TaskLog.Client.Pages.DayLogView { }
 }

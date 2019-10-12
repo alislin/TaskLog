@@ -1,13 +1,13 @@
 ﻿@inherits ProjectItemBase
 <dt>
-    <div class="row">
+    <div class="row" @onmousemove="o=>ShowActionFlag=true" @onmouseout="o=>ShowActionFlag=false">
         <div class="col">
             <StrapActionItem CommandAction="Goto" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
                 <strong title="创建时间：@Project?.Created">@Project?.Name</strong>
             </StrapActionItem>
         </div>
         <div class="col-1 text-right align-top">
-            @if (Project.Id != "0")
+            @if (ShowActionFlag && Project.Id != "0")
             {
                 if (Todos.Count == 0)
                 {
@@ -27,29 +27,32 @@
         @foreach (var item in Todos)
         {
             var todo = item;
-            <li>
+            var count = local.Storage.TodoLogs.Count(x => x.TodoId == item.Id);
+            var countFlag = count == 0;
+            <li @onmouseover="o=>ShowActionFlagKey=todo.Key" @onmouseout="o=>ShowActionFlagKey=null">
                 <div class="row">
                     <div class="col">
-                        @if (EditMode == 2 && EditKey==todo.Key)
-                        {
-                            <TextEdit Text="@item.Name" Confirm="UpdateTodo" Exit="ExitEditMode" Key="@todo.Key"></TextEdit>
-                        }
-                        else
-                        {
-                            <div @ondblclick="@(o => EnterEditMode(2,todo.Key))">@item.Name</div>
-                        }
+                        <TextEdit Text="@item.Name" Data="@todo.Key" Confirm="UpdateTodo">
+                            <div class="@(countFlag ? "text-muted" : "")">
+                                @item.Name
+                                <span class="badge badge-light badge-pill float-right">@(!countFlag ? count.ToString() : "")</span>
+                            </div>
+                        </TextEdit>
                     </div>
-                    <div class="col-1 text-right align-top">
-                        <StrapActionItem CommandAction="o=>Delete(todo)" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
-                            <i class="icon-file-minus" title="Delete Item"></i>
-                        </StrapActionItem>
-                    </div>
+                    @if (false && todo.Key==ShowActionFlagKey && countFlag)
+                    {
+                        <div class="col-1 text-right align-top">
+                            <StrapActionItem CommandAction="o=>Delete(todo)" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
+                                <i class="icon-file-minus" title="Delete Item"></i>
+                            </StrapActionItem>
+                        </div>
+                    }
                 </div>
             </li>
         }
         @if (EditMode == 1 && string.IsNullOrWhiteSpace(EditKey))
         {
-            <li><TextEdit Confirm="AddTodo" Exit="ExitEditMode" Key="@Project?.Key"></TextEdit></li>
+            <li><TextEdit EditMode="true" Confirm="AddTodo" Data="@Project?.Key" Exit="ExitEditMode"></TextEdit></li>
         }
 
     </ul>

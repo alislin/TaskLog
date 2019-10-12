@@ -16,6 +16,8 @@ namespace TaskLog.Client.Pages
         /// </summary>
         protected int EditMode { get; set; }
         protected string EditKey { get; set; }
+        protected string ShowActionFlagKey { get; set; }
+        protected bool ShowActionFlag { get; set; }
 
         [Parameter]
         public Project Project
@@ -71,8 +73,10 @@ namespace TaskLog.Client.Pages
         /// 创建Todo
         /// </summary>
         /// <param name="item"></param>
-        public void AddTodo(string item, string key)
+        public void AddTodo((string item, object key) data)
         {
+            var item = data.item;
+            var key = (string)data.key;
             if (string.IsNullOrWhiteSpace(item) || string.IsNullOrWhiteSpace(key))
             {
                 return;
@@ -90,8 +94,10 @@ namespace TaskLog.Client.Pages
         /// 更新Todo
         /// </summary>
         /// <param name="item"></param>
-        public void UpdateTodo(string item, string key)
+        public void UpdateTodo((string item, object key) data)
         {
+            var item = data.item;
+            var key = (string)data.key;
             if (string.IsNullOrWhiteSpace(item) || string.IsNullOrWhiteSpace(key))
             {
                 return;
@@ -100,7 +106,7 @@ namespace TaskLog.Client.Pages
             dat.Name = item;
 
             local.Storage.Update(dat);
-            ExitEditMode();
+            //ExitEditMode();
         }
 
 

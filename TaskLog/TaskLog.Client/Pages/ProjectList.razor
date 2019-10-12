@@ -18,7 +18,7 @@
             }
             @if (EditMode == 1 && string.IsNullOrWhiteSpace(EditKey))
             {
-                <dt><TextEdit Confirm="AddProject" Exit="ExitEditMode"></TextEdit></dt>
+                <dt><TextEdit EditMode="true" Confirm="AddProject" Exit="ExitEditMode"></TextEdit></dt>
                 <dd></dd>
             }
         </dl>

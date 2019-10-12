@@ -76,8 +76,10 @@ namespace TaskLog.Client.Pages
         /// 创建项目
         /// </summary>
         /// <param name="item"></param>
-        public void AddProject(string item,string key)
+        public void AddProject((string item,object key) data)
         {
+            var item = data.item;
+            var key = (string)data.key;
             if (string.IsNullOrWhiteSpace(item))
             {
                 return;

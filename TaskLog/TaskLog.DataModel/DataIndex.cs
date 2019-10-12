@@ -43,5 +43,12 @@ namespace TaskLog.DataModel
     {
         public static Random RndKey { get; set; } = new Random(DateTime.Now.Millisecond);
         public static string Key => $"{DateTime.Now.ToFileTimeUtc()}{RndKey.Next(99999999).ToString("00000000")}";
+        public static void AddUniq<T>(this IList<T> list,T item)
+        {
+            if (!list.Contains(item))
+            {
+                list.Add(item);
+            }
+        }
     }
 }

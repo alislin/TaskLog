@@ -10,12 +10,14 @@ using Thunder.Blazor.Components;
 using Thunder.Blazor.Extensions;
 using Thunder.Standard.Lib.Model;
 
-namespace TaskLog.Client.Pages
+namespace TaskLog.Client.Shared
 {
-    public class TodoLogEditBase:TComponent
+    public class TodoLogEditBase : TComponent
     {
+
         [Inject] public LocalService local { get; set; }
         [Parameter] public TodoLog TodoLog { get; set; } = new TodoLog();
+        [Parameter] public bool EditMode { get; set; }
         protected SelectOption SelectedTodo { get; set; } = new SelectOption();
         protected SelectOptionContext TodoOption { get; set; }
         //[Parameter] public EventCallback<TodoLog> OnConfirm { get; set; }
@@ -32,12 +34,12 @@ namespace TaskLog.Client.Pages
             Update();
         }
 
-        public void UpdateValue(object obj)
+        public void UpdateValue(object objvalue)
         {
-            Console.WriteLine($"更新编辑值。value:{TodoLog.ToJson()}");
+            //Console.WriteLine($"更新编辑值。value:{TodoLog.ToJson()}");
             var todo = (Todo)SelectedTodo.Object;
-            TodoLog.ProjcectId = todo.ProjcectId;
-            TodoLog.TodoId = todo.Id;
+            TodoLog.ProjcectId = todo?.ProjcectId;
+            TodoLog.TodoId = todo?.Id;
             local.Storage.Update(TodoLog);
             CloseModal();
             //OnConfirm.InvokeAsync(TodoLog);
@@ -50,7 +52,7 @@ namespace TaskLog.Client.Pages
 
         protected void OnKeyUp(KeyboardEventArgs key)
         {
-            Console.WriteLine(key.Key);
+            //Console.WriteLine(key.Key);
             if (key.CtrlKey && key.Key == "Enter")
             {
 
@@ -67,19 +69,25 @@ namespace TaskLog.Client.Pages
                         Value = t.Id,
                         Text = t.Name,
                         Group = p.Name,
-                        Object = t
+                        Object = t,
+                        Selected = TodoLog.TodoId == t.Id
                     };
             var selectOption = q.ToList();
             selectOption.Insert(0, new SelectOption
             {
                 Value = null,
                 Text = "未分类",
-                Selected = true
             });
             TodoOption = new SelectOptionContext
             {
                 Items = selectOption
             };
+        }
+
+        protected async void DeleteLog(object objvalue)
+        {
+            await local.Storage.Remove(TodoLog);
+            CloseModal();
         }
     }
 }

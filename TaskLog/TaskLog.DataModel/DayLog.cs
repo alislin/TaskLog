@@ -27,6 +27,6 @@ namespace TaskLog.DataModel
         /// <summary>
         /// 事项日志
         /// </summary>
-        public List<TodoLog> TodoLogs { get; set; }
+        public List<TodoLog> TodoLogs { get; set; } = new List<TodoLog>();
     }
 }

@@ -34,6 +34,7 @@ namespace TaskLog.Client.Pages
             {
                 if (e == local.Storage.MessageTypeUpdate)
                 {
+                    Reload();
                     Update();
                 }
             };

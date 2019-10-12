@@ -16,14 +16,15 @@ namespace TaskLog.Client.Pages
     public class DayLogViewBase:TComponent
     {
         protected int id = 0;
-        [Inject] LocalService local { get; set; }
+        [Inject] protected LocalService local { get; set; }
         [Parameter]
-        public int Id
+        public string Id
         {
-            get => id;
+            get => id.ToString();
             set
             {
-                id = value;
+                id = 0;
+                int.TryParse(value, out id);
                 Load(id);
             }
         }
@@ -31,21 +32,44 @@ namespace TaskLog.Client.Pages
         protected List<Todo> Todos { get; set; } = new List<Todo>();
         protected List<Project> Projects { get; set; } = new List<Project>();
         protected DayLog DayLog { get; set; }
+        protected bool HasContent => DayLog != null;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
+            ComponentService.OnMessage += (o, e) =>
+            {
+                if (e == local.Storage.MessageTypeUpdate)
+                {
+                    Load(id);
+                    Update();
+                }
+            };
+
+            Load(id);
         }
 
         protected void Load(int id)
         {
-            var day = DateTime.Now.AddDays(-id).GetDayId();
+            Caption = GetTitle(id);
+            var day = DateTime.Now.AddDays(-id)
+                                  .GetDayId();
             DayLog = local.Storage.DayLogs.FirstOrDefault(x => x.Date == day);
-            var todoId = DayLog.TodoLogs.Select(x => x.TodoId).GroupBy(x => x).Select(x => x.Key).ToList();
+            if (DayLog == null)
+            {
+                return;
+            }
+            var todoId = DayLog.TodoLogs.Select(x => x.TodoId)?
+                                        .GroupBy(x => x)
+                                        .Select(x => x.Key)
+                                        .ToList();
             Todos.Clear();
             Todos.AddRange(local.Storage.Todos.Where(x => todoId.Contains(x.Id)));
 
-            var projectId = DayLog.TodoLogs.Select(x => x.ProjcectId).GroupBy(x => x).Select(x => x.Key).ToList();
+            var projectId = DayLog.TodoLogs.Select(x => x.ProjcectId)
+                                           .GroupBy(x => x)
+                                           .Select(x => x.Key)
+                                           .ToList();
             Projects.Clear();
             Projects.AddRange(local.Storage.Projects.Where(x => projectId.Contains(x.Id)));
         }
@@ -64,10 +88,13 @@ namespace TaskLog.Client.Pages
 
         protected string GetTitle(int id)
         {
-            //var title = id switch {
-            //    0 => "",
-            //};
-            return "";
+            var title = id switch
+            {
+                0 => "今天",
+                1 => "昨天",
+                _ => DateTime.Now.AddDays(-id).ToString("yyyy 年 M 月 d 日")
+            };
+            return title;
         }
     }
 }

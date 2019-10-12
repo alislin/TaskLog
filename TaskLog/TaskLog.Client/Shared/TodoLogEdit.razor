@@ -1,0 +1,41 @@
+﻿@inherits TodoLogEditBase
+<div class="form-group">
+    <textarea @bind-value="@TodoLog.Report" @bind-value:event="oninput" placeholder="输入记录内容" class="form-control" rows="10" @onkeyup="@(OnKeyUp)"></textarea>
+</div>
+<div class="form-group">
+    <ThunderSelect DataContext="TodoOption" @bind-SelectedItem="SelectedTodo" StyleClass="form-control"></ThunderSelect>
+</div>
+<div class="form-group">
+    <input type="text" placeholder="创建时间" class="form-control" @bind-value="TodoLog.Created" />
+</div>
+@*<div class="form-group">
+    [@SelectedTodo.Text] @TodoLog.Report
+</div>*@
+<div class="form-group">
+    <StrapButton CommandAction="UpdateValue" Outline="true">保存</StrapButton>
+    <StrapButton CommandAction="Reset" Style="StyleType.danger" Outline="true">重置</StrapButton>
+    @if (EditMode)
+    {
+        <StrapButton CommandAction="DeleteLog" Style="StyleType.danger" StyleClass="ml-2"><i class="icon-trash" title="Delete"></i></StrapButton>
+    }
+</div>
+@code {
+    private TContext<TodoLogEdit> DataContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            DataContext = GetContextParameter<TodoLogEdit>(null);
+            TodoLog = DataContext?.View?.TodoLog;
+            EditMode = DataContext?.View?.EditMode ?? false;
+            Caption = DataContext?.View?.Caption;
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+        base.OnInitialized();
+    }
+}

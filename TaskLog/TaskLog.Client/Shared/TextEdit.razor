@@ -1,36 +1,62 @@
 ﻿@inherits TComponent
-<div class="input-group">
-    <textarea rows="2" type="text" autofocus class="form-control" style="white-space:normal;word-wrap:break-word;word-break:break-all" @bind-value="@Text" @bind-value:event="oninput" @onkeyup="OnKeyUp" />
-    <span class="input-group-append">
-        <span class="input-group-text pl-1 pr-1">
-            @*<StrapButton StyleClass="btn m-0 p-0" CommandAction="UpdateValue" Style="StyleType.primary"><i class="icon-checkmark2"></i></StrapButton>*@
-            <StrapButton StyleClass="btn m-0 p-0" CommandAction="Reset" Style="StyleType.danger"><i class="icon-cross3"></i></StrapButton>
+@if (EditMode)
+{
+    <div class="input-group">
+        <textarea rows="2" type="text" autofocus class="form-control" style="white-space:normal;word-wrap:break-word;word-break:break-all" @bind-value="@Text" @bind-value:event="oninput" @onkeyup="OnKeyUp" />
+        <span class="input-group-append">
+            <span class="input-group-text pl-1 pr-1">
+                <StrapButton StyleClass="btn m-0 p-0" CommandAction="ExitMode" Style="StyleType.danger"><i class="icon-cross3"></i></StrapButton>
+            </span>
         </span>
-    </span>
-</div>
+    </div>
+}
+else
+{
+    <div @ondblclick="o=>EditMode=true">@ChildContent</div>
+}
 
 @code {
     [Parameter] public string Text { get; set; }
-    [Parameter] public string Key { get; set; }
+    [Parameter] public object Data { get; set; }
+    [Parameter] public int Row { get; set; } = 2;
+    [Parameter] public bool IsMultiLine { get; set; }
+    [Parameter] public bool IsDoubleClickEnter { get; set; } = true;
     /// <summary>
     /// 确认提交
     /// </summary>
-    [Parameter] public Action<string,string> Confirm { get; set; }
+    [Parameter] public Action<(string text,object data)> Confirm { get; set; }
     [Parameter] public Action Exit { get; set; }
+
+    [Parameter] public bool EditMode { get; set; }
 
     private void OnKeyUp(KeyboardEventArgs key)
     {
-        Console.WriteLine(key.Key);
         if (key.Key == "Enter")
         {
             //UpdateValue(null);
-            Confirm?.Invoke(Text, Key);
+            if (!IsMultiLine)
+            {
+                //去除回车
+                Text = Text.Replace("\n", "").Replace("\r", "");
+            }
+            else
+            {
+                //去掉最后一个回车
+                var temp = Text?.Substring(Text.Length - 1);
+                if (temp=="\n")
+                {
+                    Text = Text.Substring(0, Text.Length - 1);
+                }
+            }
+
+            Confirm?.Invoke((Text, Data));
+            ExitMode(null);
         }
     }
 
-    private void Reset(object obj)
+    private void ExitMode(object objvalue)
     {
-        Text = null;
+        EditMode = false;
         Exit?.Invoke();
     }
 }

@@ -47,6 +47,7 @@ namespace TaskLog.Client.Data
         /// Todo 列表
         /// </summary>
         public List<Todo> Todos { get; set; } = new List<Todo>();
+        public List<TodoLog> TodoLogs => GetTodoLogs();
         /// <summary>
         /// 归档数据
         /// </summary>
@@ -121,12 +122,20 @@ namespace TaskLog.Client.Data
             foreach (var item in DataIndex.Projects)
             {
                 var dat = await Load<Project>(item);
+                if (dat == null)
+                {
+                    continue;
+                }
                 Projects.Add(dat);
             }
 
             foreach (var item in DataIndex.Todos)
             {
                 var dat = await Load<Todo>(item);
+                if (dat == null)
+                {
+                    continue;
+                }
                 Todos.Add(dat);
                 if (string.IsNullOrWhiteSpace(dat.ProjcectId))
                 {
@@ -137,6 +146,10 @@ namespace TaskLog.Client.Data
             foreach (var item in DataIndex.DayLogs)
             {
                 var dat = await Load<DayLog>(item);
+                if (dat == null)
+                {
+                    continue;
+                }
                 DayLogs.Add(dat);
                 dat.TodoLogs.ForEach(x =>
                 {
@@ -167,7 +180,7 @@ namespace TaskLog.Client.Data
             {
                 Created(item);
                 Projects.Add(item);
-                DataIndex.Projects.Add(item.Key);
+                DataIndex.Projects.AddUniq(item.Key);
                 await Save(DataIndex);
             }
             else
@@ -194,7 +207,7 @@ namespace TaskLog.Client.Data
             {
                 Created(item);
                 Todos.Add(item);
-                DataIndex.Todos.Add(item.Key);
+                DataIndex.Todos.AddUniq(item.Key);
                 await Save(DataIndex);
             }
             else
@@ -229,8 +242,9 @@ namespace TaskLog.Client.Data
                 Created(daylog);
                 Created(item);
                 daylog.TodoLogs.Add(item);
+                DayLogs.Add(daylog);
               
-                DataIndex.DayLogs.Add(daylog.Key);
+                DataIndex.DayLogs.AddUniq(daylog.Key);
                 await Save(daylog);
                 await Save(DataIndex);
                 
@@ -252,7 +266,8 @@ namespace TaskLog.Client.Data
                 }
                 await Save(p);
             }
-            //MessageAction?.Invoke(MessageType);
+
+            MessageAction?.Invoke(MessageTypeUpdate);
         }
         #endregion
 
@@ -330,10 +345,14 @@ namespace TaskLog.Client.Data
 
                 //移除索引
                 DataIndex.DayLogs.Remove(daylog.Key);
-                await Save(DataIndex);
+                await Remove(daylog.Key);
             }
+            else
+            {
+                await Save(daylog);
+            }
+            await Save(DataIndex);
 
-            await Remove(log.Key);
             MessageAction?.Invoke(MessageTypeUpdate);
         }
         #endregion
@@ -365,13 +384,19 @@ namespace TaskLog.Client.Data
                 //加载未分配数据
                 projectData.Project = new Project { Name = "待分配日志", Created = DateTime.Now, Id = "0" };
                 projectData.Todos.Add(new Todo { Name = "未分类", Created = DateTime.Now });
-                var untypelogs = DayLogs.Where(x => x.TodoLogs.Where(y => string.IsNullOrWhiteSpace(y.ProjcectId)).Count() > 0).ToList();
-                untypelogs.ForEach(x => projectData.Logs.AddRange(x.TodoLogs.Where(y => string.IsNullOrWhiteSpace(y.ProjcectId))));
+                projectData.Logs.AddRange(TodoLogs.Where(x => string.IsNullOrWhiteSpace(x.ProjcectId)));
+
                 return projectData;
             }
-            var daylogs = DayLogs.Where(x => x.TodoLogs.Where(y => y.ProjcectId == projectId).Count() > 0).ToList();
-            daylogs.ForEach(x => projectData.Logs.AddRange(x.TodoLogs.Where(y => y.ProjcectId == projectId)));
+            projectData.Logs.AddRange(TodoLogs.Where(x => x.ProjcectId == projectId));
             return projectData;
+        }
+
+        private List<TodoLog> GetTodoLogs()
+        {
+            var list = new List<TodoLog>();
+            DayLogs.ForEach(x => list.AddRange(x.TodoLogs));
+            return list;
         }
         #endregion
 

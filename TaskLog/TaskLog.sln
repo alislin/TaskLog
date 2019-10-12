@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thunder.Blazor", "..\..\Thu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskLog.Client", "TaskLog.Client\TaskLog.Client.csproj", "{48B81533-253A-4906-BB98-62A5910CE9C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskLog.DataModelTests", "TaskLog.DataModelTests\TaskLog.DataModelTests.csproj", "{8D973E6E-D2FB-445B-8C20-28F546E9DA30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskLog.DataModelTests", "TaskLog.DataModelTests\TaskLog.DataModelTests.csproj", "{8D973E6E-D2FB-445B-8C20-28F546E9DA30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UITest", "UITest\UITest.csproj", "{ED1DC671-E54C-414C-AADE-C9B5867CC5DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UITest", "UITest\UITest.csproj", "{ED1DC671-E54C-414C-AADE-C9B5867CC5DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

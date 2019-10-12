@@ -1,15 +1,37 @@
-﻿@inherits LogContentViewBase
-<div class="text-muted">
-    @(TodoLog?.Created??DateTime.Now)
-    @*<i class="icon-pencil3 ml-2"></i>*@
-</div>
-<p class="mb-1">
-    @if (TodoLog?.Report == null)
-    {
-        @ChildContent
-    }
-    else
-    {
-        @TodoLog?.Report
-    }
-</p>
+﻿@inherits TComponent
+    <div class="text-muted">
+        @if (IsShowTag)
+        {
+            @if (string.IsNullOrWhiteSpace(Project))
+            {
+                <span class="badge badge-flat border-grey text-grey-600">未知分类</span>
+            }
+            else
+            {
+                <span class="badge badge-flat border-info text-info-600">@Project</span>
+            }
+        }
+        @(TodoLog?.Created ?? DateTime.Now)
+    </div>
+    <p class="mb-1" @onmousemove="o=>ShowActionFlag=true" @onmouseout="o=>ShowActionFlag=false">
+        @if (TodoLog?.Report == null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            <TextEdit Text="@TodoLog?.Report" Data="@TodoLog?.Key">
+                @TodoLog?.Report
+                @if (true || ShowActionFlag)
+                {
+                    <TodoLogNewButton StyleClass="p-0 ml-2 text-grey-300" Mode="1" TodoLog="TodoLog"></TodoLogNewButton>
+                }
+            </TextEdit>
+        }
+    </p>
+@code{
+    [Parameter] public bool IsShowTag { get; set; }
+    [Parameter] public string Project { get; set; }
+    [Parameter] public TodoLog TodoLog { get; set; }
+    bool ShowActionFlag { get; set; }
+}
