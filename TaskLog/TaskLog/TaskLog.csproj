@@ -5,6 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\**" />
+    <Compile Remove="Data\**" />
+    <Compile Remove="Services\**" />
+    <Compile Remove="Shared\**" />
+    <Content Remove="Components\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Services\**" />
+    <Content Remove="Shared\**" />
+    <EmbeddedResource Remove="Components\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="Shared\**" />
+    <None Remove="Components\**" />
+    <None Remove="Data\**" />
+    <None Remove="Services\**" />
+    <None Remove="Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\js\tasklog.app.js" />
     <Content Remove="wwwroot\js\tasklog.app.js.map" />
   </ItemGroup>
@@ -14,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.5-beta1.final">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -22,10 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
-    <Folder Include="Data\" />
-    <Folder Include="Services\" />
-    <Folder Include="Shared\" />
     <Folder Include="wwwroot\_content\Limitless\js\" />
   </ItemGroup>
 

@@ -72,7 +72,7 @@ else
         touchFlag = true;
         await Task.Run(() =>
         {
-            while (touchFlag)
+            while (touchFlag && (DateTime.Now - s).TotalMilliseconds < TouchTimeout + 500)
             {
                 Task.Delay(100).Wait();
                 if ((DateTime.Now - s).TotalMilliseconds > TouchTimeout)
