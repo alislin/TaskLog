@@ -2,7 +2,7 @@
 @if (EditMode)
 {
     <div class="input-group">
-        <textarea rows="2" type="text" autofocus class="form-control" style="white-space:normal;word-wrap:break-word;word-break:break-all" @bind-value="@Text" @bind-value:event="oninput" @onkeyup="OnKeyUp" />
+        <textarea rows="@Row" type="text" autofocus class="form-control" style="white-space:normal;word-wrap:break-word;word-break:break-all" @bind-value="@Text" @bind-value:event="oninput" @onkeyup="OnKeyUp" />
         <span class="input-group-append">
             <span class="input-group-text pl-1 pr-1">
                 <StrapButton StyleClass="btn m-0 p-0" CommandAction="ExitMode" Style="StyleType.danger"><i class="icon-cross3"></i></StrapButton>
@@ -12,7 +12,7 @@
 }
 else
 {
-    <div @ondblclick="o=>EditMode=true">@ChildContent</div>
+    <div @ondblclick="o=>EditMode=true" @ontouchstart="TouchCheck" @ontouchend="o=>touchFlag=false">@ChildContent</div>
 }
 
 @code {
@@ -24,10 +24,12 @@ else
     /// <summary>
     /// 确认提交
     /// </summary>
-    [Parameter] public Action<(string text,object data)> Confirm { get; set; }
+    [Parameter] public Action<(string text, object data)> Confirm { get; set; }
     [Parameter] public Action Exit { get; set; }
 
     [Parameter] public bool EditMode { get; set; }
+    [Parameter] public int TouchTimeout { get; set; } = 1000;
+    bool touchFlag { get; set; }
 
     private void OnKeyUp(KeyboardEventArgs key)
     {
@@ -43,7 +45,7 @@ else
             {
                 //去掉最后一个回车
                 var temp = Text?.Substring(Text.Length - 1);
-                if (temp=="\n")
+                if (temp == "\n")
                 {
                     Text = Text.Substring(0, Text.Length - 1);
                 }
@@ -58,5 +60,29 @@ else
     {
         EditMode = false;
         Exit?.Invoke();
+    }
+
+    private async void TouchCheck(object o)
+    {
+        Console.WriteLine($"{DateTime.Now} TouchCheck");
+        //EditMode = (DateTime.Now - touchTime).TotalSeconds > 3;
+        //touchTime = DateTime.MaxValue;
+
+        var s = DateTime.Now;
+        touchFlag = true;
+        await Task.Run(() =>
+        {
+            while (touchFlag)
+            {
+                Task.Delay(100).Wait();
+                if ((DateTime.Now - s).TotalMilliseconds > TouchTimeout)
+                {
+                    EditMode = true;
+                    Update();
+                    break;
+                }
+            }
+            Console.WriteLine($"{DateTime.Now} Exit TouchCheck {EditMode}");
+        });
     }
 }
