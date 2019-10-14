@@ -30,6 +30,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="content\css\limitless\bootstrap.css" />
+    <EmbeddedResource Remove="content\css\limitless\bootstrap_limitless.css" />
+    <EmbeddedResource Remove="content\css\limitless\colors.css" />
+    <EmbeddedResource Remove="content\css\limitless\components.css" />
+    <EmbeddedResource Remove="content\css\limitless\layout.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="content\css\bootstrap\bootstrap.min.css" />
   </ItemGroup>
 
@@ -39,7 +47,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Thunder.Blazor.Bootstrap" Version="1.0.1" />
+    <PackageReference Include="Thunder.Blazor.Bootstrap" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
