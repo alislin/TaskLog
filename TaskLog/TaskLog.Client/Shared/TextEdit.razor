@@ -12,7 +12,7 @@
 }
 else
 {
-    <div @ondblclick="o=>EditMode=true" @ontouchstart="TouchCheck" @ontouchend="o=>touchFlag=false">@ChildContent</div>
+    <div @ondblclick="EnterMode" @ontouchstart="TouchCheck" @ontouchend="o=>touchFlag=false">@ChildContent</div>
 }
 
 @code {
@@ -60,6 +60,17 @@ else
     {
         EditMode = false;
         Exit?.Invoke();
+    }
+
+    private void EnterMode(object objvalue)
+    {
+        EditMode = true;
+        //关闭之前开启的编辑窗口
+        ComponentService.DoAction("TextEdit");
+        //添加关闭指令
+        ComponentService.AddAction("TextEdit", () => ExitMode(null));
+        //刷新组件
+        ComponentService.NeedUpdate();
     }
 
     private async void TouchCheck(object o)
