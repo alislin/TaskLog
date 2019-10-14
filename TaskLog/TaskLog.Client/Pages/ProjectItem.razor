@@ -29,7 +29,7 @@
             var todo = item;
             var count = local.Storage.TodoLogs.Count(x => x.TodoId == item.Id);
             var countFlag = count == 0;
-            <li @onmouseover="o=>ShowActionFlagKey=todo.Key" @onmouseout="o=>ShowActionFlagKey=null">
+            <li>
                 <div class="row">
                     <div class="col">
                         <TextEdit Text="@item.Name" Data="@todo.Key" Confirm="UpdateTodo">

@@ -42,6 +42,19 @@ namespace TaskLog.Client.Pages
             Reload();
         }
 
+        protected void UpdateText((string text,object key) dat)
+        {
+            var item = dat.text;
+            var key = (string)dat.key;
+            if (key!= dataContext.Project.Key)
+            {
+                return;
+            }
+            dataContext.Project.Name = item;
+            local.Storage.Update(dataContext.Project);
+            Reload();
+        }
+
         public void UpdateValue(TodoBase project)
         {
             if (project == null)

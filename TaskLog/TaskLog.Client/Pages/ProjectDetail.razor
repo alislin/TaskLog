@@ -2,7 +2,9 @@
 @inherits ProjectDetailBase
 <StrapCard>
     <Header>
-        <h5>@DataContext?.Project?.Name<i class="icon-pencil3 ml-2" title="Edit"></i></h5>
+        <TextEdit Text="@DataContext?.Project?.Name" Data="@DataContext?.Project?.Key" Confirm="@UpdateText">
+            <h5>@DataContext?.Project?.Name<i class="icon-pencil3 ml-2" title="Edit"></i></h5>
+        </TextEdit>
     </Header>
     <ChildContent>
         @if (DataContext?.HasTodos ?? false)
@@ -23,22 +25,3 @@
         }
     </ChildContent>
 </StrapCard>
-@*<h3>@Id</h3>
-<TodoBaseEdit @ref="pEdit" OnConfirm="UpdateValue"></TodoBaseEdit>
-@if ((dataContext?.Todos?.Count ?? 0) > 0)
-{
-    foreach (var item in dataContext.Todos)
-    {
-        var v = item;
-        Action<object> edit = (o) =>
-        {
-            pEdit.Project = v;
-            Update();
-        };
-        <TodoItem Item="item" CommandAction="edit"></TodoItem>
-    }
-}*@
-
-@code {
-    TodoBaseEdit pEdit;
-}

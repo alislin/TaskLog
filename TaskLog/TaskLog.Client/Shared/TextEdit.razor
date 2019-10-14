@@ -64,11 +64,11 @@ else
 
     private void EnterMode(object objvalue)
     {
-        EditMode = true;
         //关闭之前开启的编辑窗口
         ComponentService.DoAction("TextEdit");
         //添加关闭指令
         ComponentService.AddAction("TextEdit", () => ExitMode(null));
+        EditMode = true;
         //刷新组件
         ComponentService.NeedUpdate();
     }
