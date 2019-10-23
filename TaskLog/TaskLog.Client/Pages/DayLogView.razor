@@ -1,23 +1,11 @@
 ﻿@page "/day/{Id}"
 @inherits DayLogViewBase
-@{ 
-    var dayNext = id <= 0 ? "" : $"/day/{id - 1}";
-    var dayPrev = $"/day/{id + 1}";
-}
 <StrapCard>
     <Header>
         <h5 class="m-0">@Caption</h5>
         <div class="header-elements">
             <div class="list-icons">
-                <StrapActionItem Style="StyleType.none" ActionItemTag="ActionItemTag.a" CommandAction="o=>local.NavHelper.NavigateTo(dayPrev)">
-                    <i class="icon-arrow-left22" title="前一天"></i> 前一天
-                </StrapActionItem>
-                @if (id > 0)
-                {
-                    <StrapActionItem Style="StyleType.none" ActionItemTag="ActionItemTag.a" CommandAction="o=>local.NavHelper.NavigateTo(dayNext)">
-                        后一天 <i class="icon-arrow-right22" title="后一天"></i>
-                    </StrapActionItem>
-                }
+                <Navgator DayNext="DayNext" DayPrev="DayPrev"></Navgator>
             </div>
         </div>
     </Header>

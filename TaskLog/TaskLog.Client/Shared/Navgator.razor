@@ -1,0 +1,50 @@
+﻿@inherits TComponent
+@if (ShowPrev)
+{
+    <StrapActionItem Style="StyleType.none" ActionItemTag="ActionItemTag.a" CommandAction="o=>local.NavHelper.NavigateTo(GetDayUrl(DayPrev??DateTime.Now))">
+        <i class="icon-arrow-left22" title="@TextPrev"></i> @TextPrev
+    </StrapActionItem>
+}
+@if (ShowNext)
+{
+    <StrapActionItem Style="StyleType.none" ActionItemTag="ActionItemTag.a" CommandAction="o=>local.NavHelper.NavigateTo(GetDayUrl(DayNext??DateTime.Now))">
+        @TextNext <i class="icon-arrow-right22" title="@TextNext"></i>
+    </StrapActionItem>
+}
+
+@code {
+    [Inject] LocalService local { get; set; }
+    [Parameter] public DateTime? DayPrev { get; set; }
+    [Parameter] public DateTime? DayNext { get; set; }
+    private bool ShowPrev => CheckShow(DayPrev ?? DateTime.MinValue);
+    private bool ShowNext => CheckShow(DayNext ?? DateTime.MinValue);
+    private string TextPrev => GetDayCaption(DayPrev ?? DateTime.MinValue);
+    private string TextNext => GetDayCaption(DayNext ?? DateTime.MinValue);
+
+    private string GetDayUrl(DateTime time)
+    {
+        var d = (int)(DateTime.Now.Date - time.Date).TotalDays;
+        return $"/day/{d}";
+    }
+
+    private string GetDayCaption(DateTime time)
+    {
+        var d = time.Date;
+        return (int)(DateTime.Now.Date - d).TotalDays switch
+        {
+            0 => "今天",
+            1 => "昨天",
+            var x when x < 180 => time.ToString("M月d日"),
+            _ => time.ToString("yyyy年M月d日")
+        };
+    }
+
+    private bool CheckShow(DateTime time)
+    {
+        if (time>DateTime.MinValue)
+        {
+            return true;
+        }
+        return false;
+    }
+}

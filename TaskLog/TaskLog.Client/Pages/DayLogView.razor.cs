@@ -33,6 +33,8 @@ namespace TaskLog.Client.Pages
         protected List<Project> Projects { get; set; } = new List<Project>();
         protected DayLog DayLog { get; set; }
         protected bool HasContent => DayLog != null;
+        protected DateTime? DayPrev { get; set; }
+        protected DateTime? DayNext { get; set; }
 
         protected override void OnInitialized()
         {
@@ -55,6 +57,8 @@ namespace TaskLog.Client.Pages
             var day = DateTime.Now.AddDays(-id)
                                   .GetDayId();
             DayLog = local.Storage.DayLogs.FirstOrDefault(x => x.Date == day);
+            DayNext = local.Storage.DayLogs.OrderBy(x => x.Date).FirstOrDefault(x => x.Date > day)?.Created;
+            DayPrev = local.Storage.DayLogs.OrderBy(x => x.Date).LastOrDefault(x => x.Date < day)?.Created;
             if (DayLog == null)
             {
                 return;
