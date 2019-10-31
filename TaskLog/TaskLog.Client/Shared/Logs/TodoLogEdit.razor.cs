@@ -10,12 +10,11 @@ using Thunder.Blazor.Components;
 using Thunder.Blazor.Extensions;
 using Thunder.Standard.Lib.Model;
 
-namespace TaskLog.Client.Shared
+namespace TaskLog.Client.Shared.Logs
 {
-    public class TodoLogEditBase : TComponent
+    public class TodoLogEditBase : TLComponent
     {
 
-        [Inject] public LocalService local { get; set; }
         [Parameter] public TodoLog TodoLog { get; set; } = new TodoLog();
         [Parameter] public bool EditMode { get; set; }
         protected SelectOption SelectedTodo { get; set; } = new SelectOption();

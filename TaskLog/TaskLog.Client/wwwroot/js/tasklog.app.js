@@ -26,6 +26,12 @@ var tasklog;
             var body = document.getElementsByTagName("body")[0];
             body.classList.toggle("sidebar-mobile-component");
         };
+        app.prototype.highlight = function () {
+            var preList = document.getElementsByTagName("pre");
+            for (var i = 0; i < preList.length; i++) {
+                hljs.highlightBlock(preList[i]);
+            }
+        };
         return app;
     }());
     function Init() {

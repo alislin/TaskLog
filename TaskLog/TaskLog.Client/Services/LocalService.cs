@@ -37,6 +37,11 @@ namespace TaskLog.Client.Services
             Sidebar = new SidebarService(JSRuntime);
         }
 
+        public void HighLight()
+        {
+            JSRuntime.InvokeAsync<object>("ThunderBlazor.tasklogApp.highlight", null);
+        }
+
     }
 
 }

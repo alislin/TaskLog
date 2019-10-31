@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskLog.Client.Services;
+using TaskLog.Client.Shared;
 using TaskLog.DataModel;
 using Thunder.Blazor.Components;
 
-namespace TaskLog.Client.Pages
+namespace TaskLog.Client.Shared.Projects
 {
-    public class ProjectItemBase:TComponent
+    public class ProjectItemBase: TLComponent
     {
         /// <summary>
         /// 编辑模式（0：非编辑模式 / 1：编辑项目 / 2：编辑任务）
@@ -29,7 +30,6 @@ namespace TaskLog.Client.Pages
                 Load(m_Projcet);
             }
         }
-        [Inject] protected LocalService local { get; set; }
         protected List<Todo> Todos { get; } = new List<Todo>();
         protected Project m_Projcet;
 

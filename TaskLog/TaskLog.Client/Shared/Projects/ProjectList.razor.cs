@@ -10,12 +10,12 @@ using TaskLog.DataModel;
 using Thunder.Blazor.Components;
 using Microsoft.AspNetCore.Components.Web;
 using TaskLog.Client.Services;
+using TaskLog.Client.Shared;
 
-namespace TaskLog.Client.Pages
+namespace TaskLog.Client.Shared.Projects
 {
-    public class ProjectListBase : TComponent
+    public class ProjectListBase : TLComponent
     {
-        [Inject] protected LocalService local { get; set; }
         /// <summary>
         /// 编辑模式（0：非编辑模式 / 1：编辑项目 / 2：编辑任务）
         /// </summary>
@@ -43,19 +43,6 @@ namespace TaskLog.Client.Pages
             }
 
             local.Storage.Update(project.To<Project>());
-        }
-
-        public void Add(object obj)
-        {
-            var pe = new TodoBaseEdit();
-            //pe.Project = new Project() { Name = "新项目名称", Created = DateTime.Now };
-            pe.OnConfirm = EventCallback.Factory.Create<TodoBase>(this, e=> {
-                UpdateValue(e);
-                CloseModal();
-            }); 
-
-
-            ShowModal(new TContext<TodoBaseEdit>(pe));
         }
 
         public void EnterEditMode(string id)

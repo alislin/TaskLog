@@ -14,7 +14,16 @@
             let body = document.getElementsByTagName("body")[0];
             body.classList.toggle("sidebar-mobile-component");
         }
+
+        public highlight(): void {
+            let preList = document.getElementsByTagName("pre");
+            for (var i = 0; i < preList.length; i++) {
+                hljs.highlightBlock(preList[i]);
+            }
+        }
     }
+
+    declare var hljs: any
 
     declare var window: Window & { ThunderBlazor: any }
 

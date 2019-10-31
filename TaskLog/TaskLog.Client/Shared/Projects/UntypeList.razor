@@ -1,4 +1,4 @@
-﻿@inherits TComponent
+﻿@inherits TLComponent
 @if (HasItem)
 {
     <StrapCard>
@@ -13,7 +13,6 @@
     </StrapCard>
 }
 @code{
-    [Inject] LocalService local { get; set; }
     bool HasItem => local.Storage.IndexProject.DayLogs.Count > 0 || local.Storage.IndexProject.Todos.Count > 0;
     
 

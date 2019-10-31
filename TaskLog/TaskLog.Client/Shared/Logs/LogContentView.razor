@@ -1,0 +1,55 @@
+﻿@inherits TLComponent
+    <div class="text-muted">
+        @if (IsShowTag)
+        {
+            @if (string.IsNullOrWhiteSpace(Project))
+            {
+                <span class="badge badge-flat border-grey text-grey-600">未知分类</span>
+            }
+            else
+            {
+                <span class="badge badge-flat border-info text-info-600">@Project</span>
+            }
+        }
+        @(TodoLog?.Created ?? DateTime.Now)
+        <ContentButton StyleClass="p-0 ml-2 text-grey-300" Mode="1" ViewContent="TodoLog"></ContentButton>
+    </div>
+<p class="mb-1">
+    @if (TodoLog?.Report == null)
+    {
+        @ChildContent
+    }
+    else
+    {
+        <TextEdit Text="@TodoLog?.Report" Data="@TodoLog?.Key" IsMultiLine="true" Confirm="UpdateLog">
+            @LogContent
+            @if (false && ShowActionFlag)
+            {
+                <ContentButton StyleClass="p-0 ml-2 text-grey-300" Mode="1" ViewContent="TodoLog"></ContentButton>
+            }
+        </TextEdit>
+    }
+</p>
+@code{
+    [Parameter] public bool IsShowTag { get; set; }
+    [Parameter] public string Project { get; set; }
+    [Parameter] public TodoLog TodoLog { get; set; }
+    bool ShowActionFlag { get; set; }
+    protected MarkupString LogContent => GetMdContent(TodoLog?.Report);
+
+    private MarkupString GetMdContent(string m)
+    {
+        return m.ToMarkdown().ToMarkup();
+    }
+
+    private void UpdateLog((string item, object key) data)
+    {
+        TodoLog.Report = data.item;
+        local.Storage.Update(TodoLog);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        local.HighLight();
+    }
+}

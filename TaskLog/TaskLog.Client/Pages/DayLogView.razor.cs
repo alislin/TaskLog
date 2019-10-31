@@ -8,15 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskLog.Client.Services;
+using TaskLog.Client.Shared;
 using TaskLog.DataModel;
 using Thunder.Blazor.Components;
 
 namespace TaskLog.Client.Pages
 {
-    public class DayLogViewBase:TComponent
+    public class DayLogViewBase: TLComponent
     {
         protected int id = 0;
-        [Inject] protected LocalService local { get; set; }
         [Parameter]
         public string Id
         {

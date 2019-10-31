@@ -3,7 +3,7 @@
 <StrapCard>
     <Header>
         <TextEdit Text="@DataContext?.Project?.Name" Data="@DataContext?.Project?.Key" Confirm="@UpdateText">
-            <h5>@DataContext?.Project?.Name<i class="icon-pencil3 ml-2" title="Edit"></i></h5>
+            <h5>@DataContext?.Project?.Name<ContentButton Mode="1" ViewContent="@(DataContext?.Project)"></ContentButton></h5>
         </TextEdit>
     </Header>
     <ChildContent>

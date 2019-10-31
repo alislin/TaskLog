@@ -3,14 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TaskLog.DataModel;
+using TaskLog.Client.Services;
 using Thunder.Blazor.Components;
 
 namespace TaskLog.Client.Shared
 {
-    public class LogContentViewBase : TComponent
+    public class TLComponent: TComponent
     {
-        [Parameter] public TodoLog TodoLog { get; set; }
-
+        [Inject] public LocalService local { get; set; }
     }
 }

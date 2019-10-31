@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace TaskLog.DataModel
@@ -24,6 +25,7 @@ namespace TaskLog.DataModel
         /// <summary>
         /// 任务名称
         /// </summary>
+        [Required(ErrorMessage ="请输入项目名称"),MinLength(5,ErrorMessage = "最少需要5个字"),MaxLength(50,ErrorMessage ="超过最大长度")]
         public string Name { get; set; }
         /// <summary>
         /// 开始时间
