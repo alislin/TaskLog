@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	  <OutputType>Library</OutputType>
+    <IsPackable>true</IsPackable>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <LangVersion>7.3</LangVersion>
+    <AssemblyName>Blazor.IndexedDB.Framework</AssemblyName>
+    <Version>1.0.1</Version>
+    <Authors>Joel Kessler</Authors>
+    <Description>A Blazor framework for interacting with IndexedDB</Description>
+    <RepositoryUrl>https://github.com/Reshiru/Blazor.IndexedDB.Framework/</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Blazor IndexedDB</PackageTags>
+    <Copyright>(c) Joel Kessler</Copyright>
+    <licenseUrl>https://github.com/Reshiru/Blazor.IndexedDB.Framework/blob/master/LICENSE</licenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageId>Reshiru.Blazor.IndexedDB.Framework</PackageId>
+    <PackageIconUrl>https://github.com/Reshiru/Blazor.IndexedDB.Framework/blob/master/logo.png?raw=true</PackageIconUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview9.19424.4" />
+    <PackageReference Include="TG.Blazor.IndexedDB" Version="1.2.1-preview" />
+  </ItemGroup>
+
+</Project>

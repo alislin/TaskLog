@@ -9,6 +9,7 @@ namespace TaskLog.DataModel
         /// <summary>
         /// 标识KEY
         /// </summary>
+        [Key]
         public string Key { get; set; }
         /// <summary>
         /// 创建人

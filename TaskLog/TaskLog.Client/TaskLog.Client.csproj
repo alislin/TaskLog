@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Thunder.Blazor\Thunder.Blazor\Thunder.Blazor\Thunder.Blazor.csproj" />
+    <ProjectReference Include="..\Blazor.IndexedDB.Framework\Blazor.IndexedDB.Framework.csproj" />
     <ProjectReference Include="..\Limitless\Limitless.csproj" />
     <ProjectReference Include="..\TaskLog.DataModel\TaskLog.DataModel.csproj" />
   </ItemGroup>

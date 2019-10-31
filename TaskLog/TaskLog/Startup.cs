@@ -1,9 +1,11 @@
-﻿using Blazored.LocalStorage;
+﻿using Blazor.IndexedDB.Framework;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TaskLog.Client.Data;
 using TaskLog.Client.Services;
 using Thunder.Blazor.Services;
 
@@ -25,8 +27,10 @@ namespace TaskLog
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddComponentServiceScoped()
-                .AddBlazoredLocalStorage()
-                .AddScoped<LocalService>();
+                    .AddBlazoredLocalStorage()
+                    //.AddScoped<IIndexedDbFactory, IndexedDbFactory>()
+                    .AddScoped<IStorage, LocalStorage>()
+                    .AddScoped<LocalService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

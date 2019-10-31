@@ -2,29 +2,33 @@
 // Create time：       2019/9/19 15:30:14
 // </copyright>
 
-using Blazored.LocalStorage;
+using Blazor.IndexedDB.Framework;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskLog.DataModel;
+using Thunder.Blazor.Services;
 
 namespace TaskLog.Client.Data
 {
-    public class Storage
+    public class IndexedDbStorage : IStorage
     {
         private string dataIndexKey = "dataindex";
+        public string MessageTypeUpdate { get; set; } = "update";
 
-        public string MessageTypeUpdate = "update";
-
-        public Storage(ILocalStorageService localStorage, Action<string> messageAction) 
+        public IndexedDbStorage(IIndexedDbFactory dbFactory, ComponentService componentService)
         {
-            this.localStorage = localStorage;
-            MessageAction = messageAction;
+            DbFactory = dbFactory;
+            ComponentService = componentService;
+            MessageAction = ComponentService.SendMessage;
+
             Init();
         }
 
-        public ILocalStorageService localStorage { get; set; }
+        [Inject] public IIndexedDbFactory DbFactory { get; set; }
+        [Inject] public ComponentService ComponentService { get; set; }
 
         /// <summary>
         /// 消息委托
@@ -32,13 +36,9 @@ namespace TaskLog.Client.Data
         public Action<string> MessageAction { get; set; }
 
         /// <summary>
-        /// 数据索引
-        /// </summary>
-        public DataIndex DataIndex { get; set; } = new DataIndex();
-        /// <summary>
         /// 进行中的项目
         /// </summary>
-        public List<Project> Projects { get; } = new List<Project>();
+        public List<Project> Projects { get; set; } = new List<Project>();
         /// <summary>
         /// 日志（读取最近一个月）
         /// </summary>
@@ -61,107 +61,41 @@ namespace TaskLog.Client.Data
         /// </summary>
         public DataIndex IndexProject { get; set; } = new DataIndex();
 
-        /// <summary>
-        /// 从浏览器加载数据
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public async Task<T> Load<T>(string key)
-        {
-            var result =await localStorage.GetItemAsync<T>(key);
-            return result;
-        }
-
-        /// <summary>
-        /// 保存数据到浏览器
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public async Task Save<T>(T item) where T : ICreated
-        {
-            await localStorage.SetItemAsync(item.Key, item);
-        }
-
-        /// <summary>
-        /// 移除数据
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public async Task Remove(string itemKey)
-        {
-            await localStorage.RemoveItemAsync(itemKey);
-        }
-
-        /// <summary>
-        /// 保存数据到浏览器
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public async Task Save(string key, object item)
-        {
-            await localStorage.SetItemAsync(key, item);
-        }
-
         private async void Init()
         {
-            //加载索引
-            DataIndex = await Load<DataIndex>(dataIndexKey);
-
-            if (DataIndex == null)
-            {
-                //首次使用
-                DataIndex = new DataIndex { Key = dataIndexKey, Created = DateTime.Now, Creator = Operator.Name };
-                return;
-            }
-
             //加载数据
-            foreach (var item in DataIndex.Projects)
-            {
-                var dat = await Load<Project>(item);
-                if (dat == null)
-                {
-                    continue;
-                }
-                Projects.Add(dat);
-            }
-
-            foreach (var item in DataIndex.Todos)
-            {
-                var dat = await Load<Todo>(item);
-                if (dat == null)
-                {
-                    continue;
-                }
-                Todos.Add(dat);
-                if (string.IsNullOrWhiteSpace(dat.ProjcectId))
-                {
-                    IndexProject.Todos.Add(dat.Key);
-                }
-            }
-
-            foreach (var item in DataIndex.DayLogs)
-            {
-                var dat = await Load<DayLog>(item);
-                if (dat == null)
-                {
-                    continue;
-                }
-                DayLogs.Add(dat);
-                dat.TodoLogs.ForEach(x =>
-                {
-                    if (string.IsNullOrWhiteSpace(x.ProjcectId))
-                    {
-                        IndexProject.DayLogs.Add(x.Key);
-                    }
-                });
-            }
+            await LoadProject();
+            await LoadTodo();
+            await LoadDayLog();
 
             MessageAction?.Invoke(MessageTypeUpdate);
         }
+
+        #region 数据加载
+        private async Task LoadProject()
+        {
+            using var db = await NewDb;
+            Projects = db.Projects.Where(x => x.Status != ProjectStatus.Archived).ToList();
+        }
+
+        private async Task LoadTodo()
+        {
+            using var db = await NewDb;
+            var plist = Projects.Select(x => x.Key).ToList();
+            Todos = db.Todos.Where(x => plist.Contains(x.ProjcectId)).ToList();
+            IndexProject.Todos.AddRange(Todos.Where(x => string.IsNullOrWhiteSpace(x.ProjcectId)).Select(x => x.Key));
+        }
+
+        private async Task LoadDayLog()
+        {
+            using var db = await NewDb;
+            DayLogs = db.DayLogs.ToList();
+            DayLogs.Select(x => x.TodoLogs).ToList().ForEach(x =>
+            {
+                IndexProject.DayLogs.AddRange(x.Where(y => string.IsNullOrWhiteSpace(y.ProjcectId)).Select(y => y.Key));
+            });
+        }
+        #endregion
 
         #region 更新方法
 
@@ -169,25 +103,25 @@ namespace TaskLog.Client.Data
         /// 更新数据
         /// </summary>
         /// <param name="item"></param>
-        public async void Update(Project item)
+        public async Task Update(Project item)
         {
             if (item == null)
             {
                 return;
             }
-            var p = Projects.FirstOrDefault(x => x.Id == item.Id);
+            using var db = await NewDb;
+            var p = db.Projects.FirstOrDefault(x => x.Id == item.Id);
             if (p == null)
             {
                 Created(item);
-                Projects.Add(item);
-                DataIndex.Projects.AddUniq(item.Key);
-                await Save(DataIndex);
+                db.Projects.Add(item);
             }
             else
             {
                 p.Update(item);
             }
-            await Save(item);
+            await db.SaveChanges();
+            await LoadProject();
             MessageAction?.Invoke(MessageTypeUpdate);
         }
 
@@ -195,26 +129,25 @@ namespace TaskLog.Client.Data
         /// 更新数据
         /// </summary>
         /// <param name="item"></param>
-        public async void Update(Todo item)
+        public async Task Update(Todo item)
         {
             if (item == null)
             {
-
                 return;
             }
-            var p = Todos.FirstOrDefault(x => x.Id == item.Id);
+            using var db =await NewDb;
+            var p = db.Todos.FirstOrDefault(x => x.Id == item.Id);
             if (p == null)
             {
                 Created(item);
-                Todos.Add(item);
-                DataIndex.Todos.AddUniq(item.Key);
-                await Save(DataIndex);
+                db.Todos.Add(item);
             }
             else
             {
                 p.Update(item);
             }
-            await Save(item);
+            await db.SaveChanges();
+            await LoadTodo();
             MessageAction?.Invoke(MessageTypeUpdate);
         }
 
@@ -222,15 +155,18 @@ namespace TaskLog.Client.Data
         /// 更新数据
         /// </summary>
         /// <param name="item"></param>
-        public async void Update(TodoLog item)
+        public async Task Update(TodoLog item)
         {
             if (item == null)
             {
 
                 return;
             }
+
+            using var db = await NewDb;
+
             var daykey = item.Created.GetDayId();
-            var p = DayLogs.FirstOrDefault(x => x.Date == daykey);
+            var p = db.DayLogs.FirstOrDefault(x => x.Date == daykey);
             if (p == null)
             {
                 //创建新的日期
@@ -242,12 +178,9 @@ namespace TaskLog.Client.Data
                 Created(daylog);
                 Created(item);
                 daylog.TodoLogs.Add(item);
-                DayLogs.Add(daylog);
-              
-                DataIndex.DayLogs.AddUniq(daylog.Key);
-                await Save(daylog);
-                await Save(DataIndex);
-                
+                db.DayLogs.Add(daylog);
+
+
             }
             else
             {
@@ -264,8 +197,10 @@ namespace TaskLog.Client.Data
                     //更新
                     tl.Update(item);
                 }
-                await Save(p);
             }
+
+            await db.SaveChanges();
+            await LoadDayLog();
 
             MessageAction?.Invoke(MessageTypeUpdate);
         }
@@ -288,12 +223,16 @@ namespace TaskLog.Client.Data
                 return;
             }
 
+            using var db = await NewDb;
+
             //移除项目
-            Projects.Remove(data.Project);
-            //移除索引
-            DataIndex.Projects.Remove(item.Key);
-            await Remove(data.Project.Key);
-            await Save(DataIndex);
+            var p = db.Projects.FirstOrDefault(x => x.Key == item.Key);
+            if (p != null)
+            {
+                db.Projects.Remove(p);
+                await db.SaveChanges();
+                await LoadProject();
+            }
             MessageAction?.Invoke(MessageTypeUpdate);
         }
 
@@ -315,11 +254,14 @@ namespace TaskLog.Client.Data
             }
 
             //移除项目
-            Todos.Remove(todo);
-            //移除索引
-            DataIndex.Todos.Remove(item.Key);
-            await Remove(todo.Key);
-            await Save(DataIndex);
+            using var db = await NewDb;
+            var p = db.Todos.FirstOrDefault(x => x.Key == item.Key);
+            if (p != null)
+            {
+                db.Todos.Remove(p);
+                await db.SaveChanges();
+                await LoadTodo();
+            }
             MessageAction?.Invoke(MessageTypeUpdate);
         }
 
@@ -331,27 +273,25 @@ namespace TaskLog.Client.Data
             }
 
             //检查是否存在
-            var data = LoadLogs(item.ProjcectId);
-            var log = data.Logs.FirstOrDefault(x => x.Key == item.Key);
-            var daylog = DayLogs.FirstOrDefault(x => x.TodoLogs.Count(y => y.Key == item.Key) > 0);
+            //var data = LoadLogs(item.ProjcectId);
+            //var log = data.Logs.FirstOrDefault(x => x.Key == item.Key);
+            //var daylog = DayLogs.FirstOrDefault(x => x.TodoLogs.Count(y => y.Key == item.Key) > 0);
 
-            //移除项目
-            daylog.TodoLogs.Remove(log);
-
-            if (daylog.TodoLogs.Count == 0)
+            using var db = await NewDb;
+            var daylog = db.DayLogs.FirstOrDefault(x => x.TodoLogs.Count(y => y.Key == item.Key) > 0);
+            if (daylog != null)
             {
-                //移除项目
-                DayLogs.Remove(daylog);
+                var log = daylog.TodoLogs.FirstOrDefault(x => x.Key == item.Key);
+                daylog.TodoLogs.Remove(log);
+                if (daylog.TodoLogs.Count == 0)
+                {
+                    db.DayLogs.Remove(daylog);
+                }
 
-                //移除索引
-                DataIndex.DayLogs.Remove(daylog.Key);
-                await Remove(daylog.Key);
             }
-            else
-            {
-                await Save(daylog);
-            }
-            await Save(DataIndex);
+
+            await db.SaveChanges();
+            await LoadDayLog();
 
             MessageAction?.Invoke(MessageTypeUpdate);
         }
@@ -410,12 +350,7 @@ namespace TaskLog.Client.Data
             item.Created = DateTime.Now;
             item.Key = KeyHelper.Key;
         }
-    }
 
-    public class ProjectData
-    {
-        public Project Project { get; set; }
-        public List<Todo> Todos { get; set; } = new List<Todo>();
-        public List<TodoLog> Logs { get; set; } = new List<TodoLog>();
+        private Task<ProjectDb> NewDb => DbFactory.Create<ProjectDb>();
     }
 }

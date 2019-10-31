@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskLog.DataModelTests", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UITest", "UITest\UITest.csproj", "{ED1DC671-E54C-414C-AADE-C9B5867CC5DB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.IndexedDB.Framework", "Blazor.IndexedDB.Framework\Blazor.IndexedDB.Framework.csproj", "{982AFC60-DF35-4AAE-A86A-F373EB56DFD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{ED1DC671-E54C-414C-AADE-C9B5867CC5DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED1DC671-E54C-414C-AADE-C9B5867CC5DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED1DC671-E54C-414C-AADE-C9B5867CC5DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{982AFC60-DF35-4AAE-A86A-F373EB56DFD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{982AFC60-DF35-4AAE-A86A-F373EB56DFD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{982AFC60-DF35-4AAE-A86A-F373EB56DFD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{982AFC60-DF35-4AAE-A86A-F373EB56DFD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

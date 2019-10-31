@@ -24,6 +24,10 @@
         /// <summary>
         /// 终结
         /// </summary>
-        Finished
+        Finished,
+        /// <summary>
+        /// 归档
+        /// </summary>
+        Archived,
     }
 }

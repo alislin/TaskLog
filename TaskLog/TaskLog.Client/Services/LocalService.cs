@@ -2,6 +2,7 @@
 // Create time：       2019/9/16 16:36:23
 // </copyright>
 
+using Blazor.IndexedDB.Framework;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -14,12 +15,13 @@ namespace TaskLog.Client.Services
 {
     public class LocalService
     {
-        public LocalService(ILocalStorageService localStorage, NavigationManager navHelper, ComponentService comService,IJSRuntime jSRuntime)
+        public LocalService(ILocalStorageService localStorage, NavigationManager navHelper, ComponentService componentService, IJSRuntime jSRuntime, IStorage storage)
         {
             LocalStorage = localStorage;
             NavHelper = navHelper;
-            ComponentService = comService;
+            ComponentService = componentService;
             JSRuntime = jSRuntime;
+            Storage = storage;
             Init();
         }
 
@@ -27,13 +29,12 @@ namespace TaskLog.Client.Services
         [Inject] public NavigationManager NavHelper { get; set; }
         [Inject] public ComponentService ComponentService { get; set; }
         [Inject] public IJSRuntime JSRuntime { get; set; }
+        [Inject] public IStorage Storage { get; set; }
 
-        public Storage Storage { get; set; }
         public SidebarService Sidebar { get; set; }
 
         public void Init()
         {
-            Storage = new Storage(LocalStorage, ComponentService.SendMessage);
             Sidebar = new SidebarService(JSRuntime);
         }
 
