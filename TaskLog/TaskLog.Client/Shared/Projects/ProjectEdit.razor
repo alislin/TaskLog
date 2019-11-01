@@ -10,7 +10,7 @@
             <InputTextArea @bind-Value="@Project.Plan" class="form-control" placeholder="输入计划思路" row="9"></InputTextArea>
         </div>
         <div class="form-group">
-            <ThunderSelect></ThunderSelect>
+            <ThunderSelect DataContext="StatusOption" @bind-SelectedItem="SelectedStatus" StyleClass="form-control"></ThunderSelect>
         </div>
         <div class="form-group">
             <StrapButton ActionItemTag="ActionItemTag.submit" Outline="true">保存</StrapButton>

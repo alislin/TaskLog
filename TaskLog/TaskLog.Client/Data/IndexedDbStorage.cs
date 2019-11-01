@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaskLog.Client.Libs;
 using TaskLog.DataModel;
 using Thunder.Blazor.Services;
+using static TaskLog.Client.Libs.DebugTime;
 
 namespace TaskLog.Client.Data
 {
@@ -109,8 +111,11 @@ namespace TaskLog.Client.Data
             {
                 return;
             }
+            dt.Check();
             using var db = await NewDb;
+            dt.Check("数据连接");
             var p = db.Projects.FirstOrDefault(x => x.Id == item.Id);
+            dt.Check("读取数据");
             if (p == null)
             {
                 Created(item);
@@ -121,7 +126,9 @@ namespace TaskLog.Client.Data
                 p.Update(item);
             }
             await db.SaveChanges();
+            dt.Check("保存");
             await LoadProject();
+            dt.Check("重新加载");
             MessageAction?.Invoke(MessageTypeUpdate);
         }
 
