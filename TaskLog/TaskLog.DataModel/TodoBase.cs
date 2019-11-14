@@ -48,6 +48,10 @@ namespace TaskLog.DataModel
         /// 分值比重
         /// </summary>
         public int Point { get; set; }
+        /// <summary>
+        /// 项目状态
+        /// </summary>
+        public ProjectStatus Status { get; set; }
 
         public TodoBase()
         {
@@ -87,6 +91,7 @@ namespace TaskLog.DataModel
             Target = todo.Target;
             Priority = todo.Priority;
             Point = todo.Priority;
+            Status = todo.Status;
         }
 
         public T To<T>() where T:TodoBase,new()

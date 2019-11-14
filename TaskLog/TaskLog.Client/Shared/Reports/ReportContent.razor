@@ -1,0 +1,36 @@
+﻿@inherits ReportContentBase
+<StrapCard>
+    <Header>
+        <h6>@Caption</h6>
+    </Header>
+    <ChildContent>
+        @if (TodoLogs.Count > 0)
+        {
+        <ul class="list-group list-group-flush border-top">
+            @foreach (var item in TodoLogs)
+            {
+                <li class="list-group-item">
+                    <span class="text-muted">@item.Created</span> @item.Report
+                </li>
+            }
+            <li class="list-group-item">
+                <span class="text-muted">2019-11-14 20:12:35</span> Sheared coasted so concurrent
+            </li>
+            <li class="list-group-item">
+                Goodness instead gull vulture
+                <span class="badge bg-pink-400 badge-pill ml-auto">38</span>
+            </li>
+            <li class="list-group-item">
+                Devilish yellow unsafe jerkily
+                <span class="badge bg-indigo-400 ml-auto">Fixed</span>
+            </li>
+            <li class="list-group-item">
+                Relentless ouch essentially
+                <span class="badge bg-success badge-pill ml-auto">40</span>
+            </li>
+        </ul>
+        }
+
+    <TextEdit Text="检测事务日志存储空间增加的问题。">检测事务日志存储空间增加的问题。</TextEdit>
+    </ChildContent>
+</StrapCard>

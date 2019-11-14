@@ -19,6 +19,14 @@ namespace TaskLog.Client.Shared.Projects
         protected string EditKey { get; set; }
         protected string ShowActionFlagKey { get; set; }
         protected bool ShowActionFlag { get; set; }
+        /// <summary>
+        /// 选择的待办事项
+        /// </summary>
+        public List<string> SelectedTodos { get; set; } = new List<string>();
+        /// <summary>
+        /// 勾选模式
+        /// </summary>
+        [Parameter] public bool CheckMode { get; set; }
 
         [Parameter]
         public Project Project

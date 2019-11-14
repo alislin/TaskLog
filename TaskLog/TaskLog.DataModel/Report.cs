@@ -28,6 +28,10 @@ namespace TaskLog.DataModel
         /// 报告明细
         /// </summary>
         public List<ReportItem> Items { get; set; }
+        /// <summary>
+        /// 父节点
+        /// </summary>
+        public string ParentKey { get; set; }
     }
 
     public class ReportItem : Todo

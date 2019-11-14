@@ -18,13 +18,13 @@ namespace TaskLog.Client.Pages
     {
         protected int id = 0;
         [Parameter]
-        public string Id
+        public int Id
         {
-            get => id.ToString();
+            get => id;
             set
             {
-                id = 0;
-                int.TryParse(value, out id);
+                id = value;
+                //int.TryParse(value, out id);
                 Load(id);
             }
         }

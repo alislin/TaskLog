@@ -1,7 +1,39 @@
-﻿@inherits ReportDetailBase
+﻿@layout ReportLayout
+@inherits ReportDetailBase
 @page "/report/{key}"
-<h3>Report</h3>
+@page "/report"
+<StrapCard>
+    <Header>
+        <h5>2019年 11月10日 - 11月17日</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <StrapButton>输出</StrapButton>
+                <StrapButton>总结</StrapButton>
+            </div>
+        </div>
+    </Header>
+    <ChildContent>
+        <div class="row mb-1">
+            <div class="input-group col">
+                <span class="input-group-prepend">
+                    <span class="input-group-text">开始日期</span>
+                </span>
+                <input type="datetime" class="form-control" placeholder="开始日期">
+            </div>
+            <div class="input-group col">
+                <span class="input-group-prepend">
+                    <span class="input-group-text">结束日期</span>
+                </span>
+                <input type="datetime" class="form-control" placeholder="结束日期">
+            </div>
+        </div>
 
+        <ReportItemView>日志记录整理</ReportItemView>
+        <ReportItemView>入口点整理</ReportItemView>
+        <ReportItemView>收费项目合并</ReportItemView>
+
+    </ChildContent>
+</StrapCard>
 @code {
 
 }

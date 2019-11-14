@@ -1,16 +1,16 @@
 ﻿@inherits TLComponent
-    <h6 class="font-weight-semibold mt-4" title="创建时间：@Todo?.Created">
-        <strong>
-            @if (string.IsNullOrWhiteSpace(Todo?.Name))
-            {
-                @ChildContent
-            }
-            else
-            {
-                @Todo?.Name
-            }
-        </strong>
-    </h6>
+<h6 class="font-weight-semibold mt-4" title="创建时间：@Todo?.Created">
+    <strong>
+        @if (string.IsNullOrWhiteSpace(Todo?.Name))
+        {
+            @ChildContent
+        }
+        else
+        {
+            @Todo?.Name
+        }
+    </strong>
+</h6>
 @if (IsShowTag)
 {
     @if (string.IsNullOrWhiteSpace(Project))
@@ -22,8 +22,20 @@
         <span class="badge badge-flat border-info text-info-600">@Project</span>
     }
 }
+@{
+    var logList = TodoLogs ?? new List<TodoLog>();
+    if (logList.Count > 0)
+    {
+        foreach (var log in logList)
+        {
+            <LogContentView TodoLog="log"></LogContentView>
+        }
+    }
+
+}
 @code {
     [Parameter] public bool IsShowTag { get; set; }
     [Parameter] public string Project { get; set; }
     [Parameter] public Todo Todo { get; set; }
+    [Parameter] public List<TodoLog> TodoLogs { get; set; }
 }

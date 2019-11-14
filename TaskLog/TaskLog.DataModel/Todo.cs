@@ -23,10 +23,6 @@ namespace TaskLog.DataModel
         /// 引入总结报告
         /// </summary>
         public bool Reported { get; set; }
-        /// <summary>
-        /// 当前正在进行
-        /// </summary>
-        public bool Openning { get; set; }
     }
 
 }

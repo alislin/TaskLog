@@ -14,7 +14,7 @@
         <dl class="mb-0">
             @foreach (var item in local.Storage.Projects)
             {
-                <ProjectItem Project="item"></ProjectItem>
+                <ProjectItem Project="item" CheckMode="CheckMode"></ProjectItem>
             }
             @if (EditMode == 1 && string.IsNullOrWhiteSpace(EditKey))
             {

@@ -21,6 +21,14 @@ namespace TaskLog.Client.Shared.Projects
         /// </summary>
         protected int EditMode { get; set; }
         protected string EditKey { get; set; }
+        /// <summary>
+        /// 选择的待办事项
+        /// </summary>
+        public List<string> SelectedTodos { get; set; }
+        /// <summary>
+        /// 勾选模式
+        /// </summary>
+        [Parameter] public bool CheckMode { get; set; }
 
         protected override void OnInitialized()
         {

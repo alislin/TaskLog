@@ -1,4 +1,4 @@
-﻿@page "/day/{Id}"
+﻿@page "/day/{Id:int}"
 @inherits DayLogViewBase
 <StrapCard>
     <Header>
@@ -16,11 +16,7 @@
             {
                 var logs = DayLog.TodoLogs.Where(x => x.TodoId == todo.Id).ToList();
                 var project = local.Storage.Projects.FirstOrDefault(x => x.Id == todo.ProjcectId)?.Name;
-                <TodoContentView IsShowTag="true" Todo="todo" Project="@project"></TodoContentView>
-                foreach (var item in logs)
-                {
-                    <LogContentView TodoLog="item"></LogContentView>
-                }
+                <TodoContentView IsShowTag="true" Todo="todo" Project="@project" TodoLogs="logs"></TodoContentView>
             }
         }
         else

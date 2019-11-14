@@ -1,0 +1,11 @@
+﻿@layout BaseLayout
+@inherits LayoutComponentBase
+
+<div class="d-md-flex align-items-md-start">
+    <SideBar>
+        <ProjectList CheckMode="true"></ProjectList>
+    </SideBar>
+    <div class="w-100 h-100">
+        @Body
+    </div>
+</div>

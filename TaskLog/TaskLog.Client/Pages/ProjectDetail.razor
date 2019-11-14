@@ -1,5 +1,4 @@
-﻿@layout BaseLayout
-@page "/project/{Id}"
+﻿@page "/project/{Id}"
 @inherits ProjectDetailBase
 <StrapCard>
     <Header>
@@ -11,17 +10,10 @@
         @if (DataContext?.HasTodos ?? false)
         {
             var todoList = DataContext?.Todos?.OrderBy(x => x.Created).ToList();
-            foreach (var item in DataContext?.Todos)
+            foreach (var item in todoList)
             {
-                <TodoContentView Project="@DataContext?.Project?.Name" Todo="item"></TodoContentView>
                 var logList = DataContext?.TodoLogs?.Where(x => x.TodoId == item.Id).OrderBy(x => x.Created).ToList();
-                if (logList.Count > 0)
-                {
-                    foreach (var log in logList)
-                    {
-                        <LogContentView TodoLog="log"></LogContentView>
-                    }
-                }
+                <TodoContentView Project="@DataContext?.Project?.Name" Todo="item" TodoLogs="logList"></TodoContentView>
             }
         }
     </ChildContent>
