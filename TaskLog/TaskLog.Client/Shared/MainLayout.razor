@@ -1,22 +1,15 @@
-﻿@inherits LayoutComponentBase
+﻿@layout BaseLayout
+@inherits LayoutComponentBase
 
-<div class="page-content">
-    <div class="content-wrapper">
-        <div class="content">
-            <div class="d-md-flex align-items-md-start">
-                <SideBar>
-                    <!-- Sidebar search -->
-                    <Search></Search>
-                    <!-- /sidebar search -->
-                    <UntypeList></UntypeList>
-                    <ProjectList></ProjectList>
-                </SideBar>
-                <div class="w-100 h-100">
-                    @Body
-                </div>
-            </div>
-            <LogFoot>© 2015 - 2019. <a href="#">Log note</a> by <a href="#" target="_blank">林亚</a></LogFoot>
-        </div>
+<div class="d-md-flex align-items-md-start">
+    <SideBar>
+        <!-- Sidebar search -->
+        <Search></Search>
+        <!-- /sidebar search -->
+        <UntypeList></UntypeList>
+        <ProjectList></ProjectList>
+    </SideBar>
+    <div class="w-100 h-100">
+        @Body
     </div>
 </div>
-<StrapModal></StrapModal>
