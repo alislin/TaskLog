@@ -19,6 +19,14 @@ namespace TaskLog.DataModel
         /// 项目Id ({项目名称}_{启动年月日})
         /// </summary>
         public string ProjcectId { get; set; }
+        /// <summary>
+        /// 引入总结报告
+        /// </summary>
+        public bool Reported { get; set; }
+        /// <summary>
+        /// 当前正在进行
+        /// </summary>
+        public bool Openning { get; set; }
     }
 
 }

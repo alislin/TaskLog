@@ -7,7 +7,7 @@
             <ValidationMessage For="@(()=>Project.Name)" />
         </div>
         <div class="form-group">
-            <InputTextArea @bind-Value="@Project.Plan" class="form-control" placeholder="输入计划思路" row="9"></InputTextArea>
+            <InputTextArea @bind-Value="@Project.Target" class="form-control" placeholder="输入任务目标" row="9"></InputTextArea>
         </div>
         <div class="form-group">
             <ThunderSelect DataContext="StatusOption" @bind-SelectedItem="SelectedStatus" StyleClass="form-control"></ThunderSelect>

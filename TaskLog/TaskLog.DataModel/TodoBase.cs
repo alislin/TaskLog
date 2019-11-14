@@ -37,10 +37,6 @@ namespace TaskLog.DataModel
         /// </summary>
         public DateTime End { get; set; }
         /// <summary>
-        /// 计划
-        /// </summary>
-        public string Plan { get; set; }
-        /// <summary>
         /// 目标
         /// </summary>
         public string Target { get; set; }
@@ -49,13 +45,9 @@ namespace TaskLog.DataModel
         /// </summary>
         public int Priority { get; set; }
         /// <summary>
-        /// 得分
+        /// 分值比重
         /// </summary>
         public int Point { get; set; }
-        /// <summary>
-        /// 实际得分
-        /// </summary>
-        public int EndPoint { get; set; }
 
         public TodoBase()
         {
@@ -92,11 +84,9 @@ namespace TaskLog.DataModel
             Id = todo.Id;
             Start = todo.Start;
             End = todo.End;
-            Plan = todo.Plan;
             Target = todo.Target;
             Priority = todo.Priority;
             Point = todo.Priority;
-            EndPoint = todo.EndPoint;
         }
 
         public T To<T>() where T:TodoBase,new()
