@@ -12,7 +12,7 @@
         <div class="form-group">
             <ThunderSelect DataContext="StatusOption" @bind-SelectedItem="SelectedStatus" StyleClass="form-control"></ThunderSelect>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-0">
             <StrapButton ActionItemTag="ActionItemTag.submit" Outline="true">保存</StrapButton>
             <StrapButton Style="StyleType.danger" Outline="true">重置</StrapButton>
             @if (EditMode)

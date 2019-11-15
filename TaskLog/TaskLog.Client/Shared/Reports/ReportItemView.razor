@@ -6,9 +6,10 @@
         <div class="header-elements">
             <div class="list-icons">
                 @*<EditForm Model="ReportItem">
-                    <InputNumber Value="50" class="form-control"></InputNumber>
-                </EditForm>*@
-                <input type="number" value="50" />
+            <InputNumber Value="50" class="form-control"></InputNumber>
+        </EditForm>*@
+                <input type="number" value="50" class="form-control" />
+                <ThunderSelect DataContext="StatusOption" @bind-SelectedItem="SelectedStatus" StyleClass="form-control"></ThunderSelect>
             </div>
         </div>
         @*<span class="text-muted d-block">Adapted navigation list for cards</span>*@

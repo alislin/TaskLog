@@ -40,7 +40,8 @@ namespace TaskLog.Client.Services
 
         public void HighLight()
         {
-            JSRuntime.InvokeAsync<object>("ThunderBlazor.tasklogApp.highlight", null);
+            //JSRuntime.InvokeAsync<object>("ThunderBlazor.tasklogApp.highlight", null);
+            System.Console.WriteLine("highlight.js loaded.");
         }
 
     }

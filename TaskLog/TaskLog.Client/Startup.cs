@@ -15,7 +15,8 @@ namespace TaskLog.Client
             services.AddComponentServiceScoped()
             .AddBlazoredLocalStorage()
             .AddScoped<IIndexedDbFactory, IndexedDbFactory>()
-            .AddScoped<IStorage, IndexedDbStorage>()
+            //.AddScoped<IStorage, IndexedDbStorage>()
+            .AddScoped<IStorage, LocalStorage>()
             .AddScoped<LocalService>();
         }
 
