@@ -18,5 +18,6 @@ namespace TaskLog.Client.Data
         public IndexedSet<Project> Projects { get; set; }
         public IndexedSet<Todo> Todos { get; set; }
         public IndexedSet<DayLog> DayLogs { get; set; }
+        public IndexedSet<Report> Reports { get; set; }
     }
 }

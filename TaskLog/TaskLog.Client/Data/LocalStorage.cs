@@ -53,6 +53,10 @@ namespace TaskLog.Client.Data
         public List<Todo> Todos { get; set; } = new List<Todo>();
         public List<TodoLog> TodoLogs => GetTodoLogs();
         /// <summary>
+        /// 报告列表
+        /// </summary>
+        public List<Report> Reports { get; set; } = new List<Report>();
+        /// <summary>
         /// 归档数据
         /// </summary>
         public ArchiveData ArchiveData { get; set; } = new ArchiveData();
@@ -164,6 +168,16 @@ namespace TaskLog.Client.Data
                 });
             }
 
+            foreach (var item in DataIndex.Reports)
+            {
+                var dat = await Load<Report>(item);
+                if (dat == null)
+                {
+                    continue;
+                }
+                Reports.Add(dat);
+            }
+
             MessageAction?.Invoke(MessageTypeUpdate);
         }
 
@@ -273,6 +287,28 @@ namespace TaskLog.Client.Data
 
             MessageAction?.Invoke(MessageTypeUpdate);
         }
+
+        /// <summary>
+        /// 更新报告
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public async Task Update(Report item)
+        {
+            if (item == null)
+            {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(item.Key) || Reports.FirstOrDefault(x => x.Key == item.Key) == null)
+            {
+                Created(item);
+                DataIndex.Reports.Add(item.Key);
+                await Save(DataIndex);
+            }
+            await Save(item);
+
+            MessageAction?.Invoke(MessageTypeUpdate);
+        }
         #endregion
 
         #region 删除方法
@@ -355,6 +391,26 @@ namespace TaskLog.Client.Data
             {
                 await Save(daylog);
             }
+            await Save(DataIndex);
+
+            MessageAction?.Invoke(MessageTypeUpdate);
+        }
+
+        public async Task Remove(Report item)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            var report = Reports.FirstOrDefault(x => x.Key == item.Key);
+            if (report == null)
+            {
+                return;
+            }
+
+            await Remove(item.Key);
+            DataIndex.Reports.Remove(item.Key);
             await Save(DataIndex);
 
             MessageAction?.Invoke(MessageTypeUpdate);

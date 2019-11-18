@@ -1,4 +1,4 @@
-﻿@layout BaseLayout
+﻿@layout ReportLayout
 @inherits ReportDetailBase
 @page "/report/view/{key}"
 <StrapCard>
@@ -28,9 +28,9 @@
             </div>
         </div>
 
-        <ReportItemView>日志记录整理</ReportItemView>
-        <ReportItemView>入口点整理</ReportItemView>
-        <ReportItemView>收费项目合并</ReportItemView>
+        <ReportTodoItemView>日志记录整理</ReportTodoItemView>
+        <ReportTodoItemView>入口点整理</ReportTodoItemView>
+        <ReportTodoItemView>收费项目合并</ReportTodoItemView>
 
     </ChildContent>
 </StrapCard>

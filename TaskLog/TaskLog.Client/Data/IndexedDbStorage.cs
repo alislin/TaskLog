@@ -51,6 +51,10 @@ namespace TaskLog.Client.Data
         public List<Todo> Todos { get; set; } = new List<Todo>();
         public List<TodoLog> TodoLogs => GetTodoLogs();
         /// <summary>
+        /// 报告列表
+        /// </summary>
+        public List<Report> Reports { get; set; } = new List<Report>();
+        /// <summary>
         /// 归档数据
         /// </summary>
         public ArchiveData ArchiveData { get; set; } = new ArchiveData();
@@ -96,6 +100,12 @@ namespace TaskLog.Client.Data
             {
                 IndexProject.DayLogs.AddRange(x.Where(y => string.IsNullOrWhiteSpace(y.ProjcectId)).Select(y => y.Key));
             });
+        }
+
+        private async Task LoadReport()
+        {
+            using var db = await NewDb;
+            Reports = db.Reports.OrderByDescending(x=>x.Created).ToList();
         }
         #endregion
 
@@ -166,7 +176,6 @@ namespace TaskLog.Client.Data
         {
             if (item == null)
             {
-
                 return;
             }
 
@@ -208,6 +217,37 @@ namespace TaskLog.Client.Data
 
             await db.SaveChanges();
             await LoadDayLog();
+
+            MessageAction?.Invoke(MessageTypeUpdate);
+        }
+
+        /// <summary>
+        /// 更新报告
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public async Task Update(Report item)
+        {
+            if (item == null)
+            {
+                return;
+            }
+            using var db = await NewDb;
+            var report = db.Reports.FirstOrDefault(x => x.Key == item.Key);
+            if (Reports == null)
+            {
+                Created(item);
+                db.Reports.Add(item);
+            }
+            else
+            {
+                report.End = item.End;
+                report.Items = item.Items;
+                report.ParentKey = item.ParentKey;
+                report.Start = item.Start;
+            }
+            await db.SaveChanges();
+            await LoadReport();
 
             MessageAction?.Invoke(MessageTypeUpdate);
         }
@@ -299,6 +339,26 @@ namespace TaskLog.Client.Data
 
             await db.SaveChanges();
             await LoadDayLog();
+
+            MessageAction?.Invoke(MessageTypeUpdate);
+        }
+
+        public async Task Remove(Report item)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            using var db = await NewDb;
+            var report = db.Reports.FirstOrDefault(x => x.Key == item.Key);
+            if (report == null)
+            {
+                return;
+            }
+            Reports.RemoveAll(x => x.Key == item.Key);
+            db.Reports.Remove(report);
+            await db.SaveChanges();
 
             MessageAction?.Invoke(MessageTypeUpdate);
         }

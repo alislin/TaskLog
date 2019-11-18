@@ -21,12 +21,15 @@ namespace TaskLog.Client.Data
         List<TodoLog> TodoLogs { get; }
         List<Todo> Todos { get; set; }
         string MessageTypeUpdate { get; set; }
+        List<Report> Reports { get; set; }
 
         ProjectData Load(string projectId);
         ProjectData LoadLogs(string projectId);
         Task Remove(Project item);
         Task Remove(Todo item);
         Task Remove(TodoLog item);
+        Task Remove(Report item);
+        Task Update(Report item);
         Task Update(Project item);
         Task Update(Todo item);
         Task Update(TodoLog item);

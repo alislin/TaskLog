@@ -1,23 +1,6 @@
-﻿@layout BaseLayout
+﻿@layout ReportLayout
 @page "/report"
-<StrapCard>
-    <Header>
-        <h5>报告列表</h5>
-        <div class="header-elements">
-            <div class="list-icons">
-                <StrapButton CommandAction="@(o=>local.NavHelper.NavigateTo("/report/open"))">创建</StrapButton>
-            </div>
-        </div>
-    </Header>
-    <ChildContent>
-        <reportMangeList>
-            <month>Month report</month>
-            <week>Week report</week>
-            <week>Week report</week>
-            <week>Week report</week>
-        </reportMangeList>
-    </ChildContent>
-</StrapCard>
+<ReportDetail></ReportDetail>
 @code{
     [Inject] LocalService local { get; set; }
 }

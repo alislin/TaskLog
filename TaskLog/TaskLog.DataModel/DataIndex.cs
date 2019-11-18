@@ -24,6 +24,10 @@ namespace TaskLog.DataModel
         /// 日志记录
         /// </summary>
         public List<string> DayLogs { get; set; } = new List<string>();
+        /// <summary>
+        /// 报告记录
+        /// </summary>
+        public List<string> Reports { get; set; } = new List<string>();
     }
 
     /// <summary>
@@ -34,6 +38,7 @@ namespace TaskLog.DataModel
         public List<Project> ArchivedProject { get; set; }
         public List<Todo> Todos { get; set; }
         public List<TodoLog> TodoLogs { get; set; }
+        public List<Report> Reports { get; set; }
     }
 
     /// <summary>

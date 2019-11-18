@@ -9,7 +9,7 @@ using Thunder.Standard.Lib.Model;
 
 namespace TaskLog.Client.Shared.Reports
 {
-    public class ReportItemViewBase: TLComponent
+    public class ReportTodoItemViewBase: TLComponent
     {
         public ReportItem ReportItem { get; set; }
         public List<TodoLog> TodoLogs { get; set; }

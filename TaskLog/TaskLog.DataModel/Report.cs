@@ -27,7 +27,7 @@ namespace TaskLog.DataModel
         /// <summary>
         /// 报告明细
         /// </summary>
-        public List<ReportItem> Items { get; set; }
+        public List<ReportItem> Items { get; set; } = new List<ReportItem>();
         /// <summary>
         /// 父节点
         /// </summary>
