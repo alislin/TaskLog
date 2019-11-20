@@ -1,5 +1,5 @@
 ﻿@layout BaseLayout
-@inherits LayoutComponentBase
+@inherits BaseLayout
 
 <div class="d-md-flex align-items-md-start">
     <SideBar>
@@ -7,7 +7,7 @@
         <Search></Search>
         <!-- /sidebar search -->
         <UntypeList></UntypeList>
-        <ProjectList></ProjectList>
+        <ProjectList Projects="local.Storage.Projects"></ProjectList>
     </SideBar>
     <div class="w-100 h-100">
         @Body

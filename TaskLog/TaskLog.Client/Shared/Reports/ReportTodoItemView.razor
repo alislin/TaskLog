@@ -6,24 +6,27 @@
         <div class="header-elements">
             <div class="list-icons">
                 @*<EditForm Model="ReportItem">
-            <InputNumber Value="50" class="form-control"></InputNumber>
-        </EditForm>*@
-                <input type="number" value="50" class="form-control" />
-                <ThunderSelect DataContext="StatusOption" @bind-SelectedItem="SelectedStatus" StyleClass="form-control"></ThunderSelect>
+                    <InputNumber Value="50" class="form-control"></InputNumber>
+                </EditForm>*@
+                <input type="number" @bind="ReportItem.Point" class="form-control" />
+                <ThunderSelect DataContext="StatusOption" @bind-SelectedItem="SelectedStatus" OnBindChanged="BindValueChanged" StyleClass="form-control"></ThunderSelect>
             </div>
         </div>
         @*<span class="text-muted d-block">Adapted navigation list for cards</span>*@
     </div>
-    <div class="row mb-4">
+    <div class="row mb-3">
         <div class="col-md-4">
-            <ReportContent Caption="计划"></ReportContent>
+            <ReportContent @bind-Content="@ReportItem.OpenContent" OnBindChanged="BindValueChanged" Caption="计划"></ReportContent>
         </div>
         <div class="col-md-4">
-            <ReportContent Caption="目标"></ReportContent>
+            <ReportContent @bind-Content="@ReportItem.Target" OnBindChanged="BindValueChanged" Caption="目标"></ReportContent>
         </div>
-        <div class="col-md-4">
-            <ReportContent Caption="总结" TodoLogs="@(new List<TodoLog> { new TodoLog() })"></ReportContent>
-        </div>
+        @if (EditMode == EditMode.View)
+        {
+            <div class="col-md-4">
+                <ReportContent @bind-Content="@ReportItem.ReportContent" OnBindChanged="BindValueChanged" Caption="总结" TodoLogs="@TodoLogs" @bind-SelectedTodoLogKeys="@ReportItem.LogKeys"></ReportContent>
+            </div>
+        }
     </div>
 @code {
 

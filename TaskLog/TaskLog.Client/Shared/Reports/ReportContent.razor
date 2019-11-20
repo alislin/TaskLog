@@ -1,37 +1,29 @@
 ﻿@inherits ReportContentBase
 <StrapCard>
     <Header>
-        <h6 class="m-0">@Caption</h6>
+        <h6 class="m-0 font-weight-bolder">@Caption</h6>
     </Header>
     <ChildContent>
         @if (TodoLogs.Count > 0)
         {
         <ul class="list-group list-group-flush border-top">
-            @foreach (var item in TodoLogs)
+            @for (int i = 0; i < TodoLogs.Count; i++)
             {
-                @*<li class="list-group-item">
-                <span class="text-muted">@item.Created</span> @item.Report
-            </li>*@
+                var index = i;
+                var checkFlag = SelectedTodoLogKeys?.Contains(TodoLogs[index].Key) ?? false;
+
+                <li class="list-group-item p-0">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" checked="@checkFlag" @onchange="@(e=>CheckedUpdate((bool)e.Value,TodoLogs[index].Key))" />
+                            <span class="text-muted">@TodoLogs[index].Created</span> @TodoLogs[index].Report
+                        </label>
+                    </div>
+                </li>
             }
-            <li class="list-group-item p-0">
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" checked="" />
-                        <span class="text-muted">2019-11-14 20:12:35</span> Sheared coasted so concurrent
-                    </label>
-                </div>
-            </li>
-            <li class="list-group-item p-0">
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" checked="" />
-                        <span class="text-muted">2019-11-14 20:12:35</span> Sheared coasted so concurrent
-                    </label>
-                </div>
-            </li>
         </ul>
         }
         <div class="border-top mb-2"></div>
-    <TextEdit Text="检测事务日志存储空间增加的问题。">检测事务日志存储空间增加的问题。</TextEdit>
+    <TextEdit IsMultiLine="true" @bind-Text="Content" PlaceHolder="双击输入" Confirm="UpdateContent"></TextEdit>
     </ChildContent>
 </StrapCard>

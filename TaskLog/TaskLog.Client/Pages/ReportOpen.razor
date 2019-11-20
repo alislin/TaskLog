@@ -1,46 +1,12 @@
 ﻿@layout BaseLayout
-@inherits ReportDetailBase
+@inherits ReportOpenBase
 @page "/report/open"
+@page "/report/open/{key}"
 <div class="d-md-flex align-items-md-start">
     <SideBar>
-        <ProjectList CheckMode="true"></ProjectList>
+        <ProjectList CheckMode="true" Projects="local.Storage.Projects" @bind-SelectedTodos="TodoKeys"></ProjectList>
     </SideBar>
     <div class="w-100 h-100">
-        <StrapCard>
-            <Header>
-                <h5>2019年 11月10日 - 11月17日</h5>
-                <div class="header-elements">
-                    <div class="list-icons">
-                        <StrapButton>保存</StrapButton>
-                        <StrapButton>任务选择</StrapButton>
-                        <StrapButton>输出</StrapButton>
-                        <StrapButton CommandAction="@(o=>local.NavHelper.NavigateTo("/report"))">关闭</StrapButton>
-                    </div>
-                </div>
-            </Header>
-            <ChildContent>
-                <div class="row mb-1">
-                    <div class="input-group col">
-                        <span class="input-group-prepend">
-                            <span class="input-group-text">开始日期</span>
-                        </span>
-                        <input type="datetime" class="form-control" placeholder="开始日期">
-                    </div>
-                    <div class="input-group col">
-                        <span class="input-group-prepend">
-                            <span class="input-group-text">结束日期</span>
-                        </span>
-                        <input type="datetime" class="form-control" placeholder="结束日期">
-                    </div>
-                </div>
-
-                <ReportTodoItemView>日志记录整理</ReportTodoItemView>
-                <ReportTodoItemView>入口点整理</ReportTodoItemView>
-                <ReportTodoItemView>收费项目合并</ReportTodoItemView>
-
-            </ChildContent>
-        </StrapCard>
+        <ReportDetail Report="Report" @bind-TodoKeys="TodoKeys"></ReportDetail>
     </div>
 </div>
-@code {
-}

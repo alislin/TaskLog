@@ -24,24 +24,13 @@ namespace TaskLog.Client.Shared.Projects
         /// <summary>
         /// 选择的待办事项
         /// </summary>
-        public List<string> SelectedTodos { get; set; }
+        [Parameter] public List<string> SelectedTodos { get; set; } = new List<string>();
+        [Parameter] public EventCallback<List<string>> SelectedTodosChanged { get; set; }
         /// <summary>
         /// 勾选模式
         /// </summary>
         [Parameter] public bool CheckMode { get; set; }
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            ComponentService.OnMessage += (o, e) =>
-            {
-                if (e == local.Storage.MessageTypeUpdate)
-                {
-                    Update();
-                }
-            };
-        }
+        [Parameter] public List<Project> Projects { get; set; } = new List<Project>();
 
         public void UpdateValue(TodoBase project)
         {
@@ -90,6 +79,26 @@ namespace TaskLog.Client.Shared.Projects
             local.Storage.Update(dat);
             ExitEditMode();
 
+        }
+
+        /// <summary>
+        /// 更新选择队列
+        /// </summary>
+        /// <param name="item"></param>
+        protected void UpdateChanged((bool addFlag,string key) item)
+        {
+            if (item.addFlag)
+            {
+                if (!SelectedTodos.Contains(item.key))
+                {
+                    SelectedTodos.Add(item.key);
+                }
+            }
+            else
+            {
+                SelectedTodos.Remove(item.key);
+            }
+            SelectedTodosChanged.InvokeAsync(SelectedTodos);
         }
     }
 }

@@ -3,30 +3,34 @@
     <div class="row">
         <div class="col">
             <StrapActionItem CommandAction="Goto" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
-                <strong title="创建时间：@Report?.Created">2019年11月</strong>
+                @*<strong title="创建时间：@Report?.Created">2019年11月</strong>*@
+                <strong title="创建时间：@Report?.Created">@Report?.Name</strong> 
             </StrapActionItem>
         </div>
         <div class="col-1 text-right align-top">
+            @*<span class="text-muted">@Report.Start.ToShortDateString() - @Report.End.ToShortDateString()</span>*@
             @*if (Todos.Count == 0)
-            {
-            <StrapActionItem CommandAction="o => Delete(Report)" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
-                <i class="icon-trash" title="Delete Project"></i>
-            </StrapActionItem>
-            }
-            <StrapActionItem CommandAction="o => EnterEditMode(1, null)" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
-                <i class="icon-file-plus" title="New Item"></i>
-            </StrapActionItem>*@
+        {
+        <StrapActionItem CommandAction="o => Delete(Report)" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
+            <i class="icon-trash" title="Delete Project"></i>
+        </StrapActionItem>
+        }
+        <StrapActionItem CommandAction="o => EnterEditMode(1, null)" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
+            <i class="icon-file-plus" title="New Item"></i>
+        </StrapActionItem>*@
         </div>
     </div>
 </dt>
 <dd>
     <ul class="list list-unstyled mb-0 ml-2">
-        @foreach (var item in Reports)
+        @foreach (var item in ChildReports)
         {
             <li>
                 <div class="row">
                     <div class="col">
-                        <StrapButton>第一周</StrapButton>
+                        <StrapActionItem CommandAction="Goto" Style="StyleType.none" ActionItemTag="ActionItemTag.a">
+                            <strong title="创建时间：@Report?.Created">@item?.Name</strong>
+                        </StrapActionItem>
                     </div>
                 </div>
             </li>

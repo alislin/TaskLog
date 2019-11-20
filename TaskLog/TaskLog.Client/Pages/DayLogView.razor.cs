@@ -38,15 +38,8 @@ namespace TaskLog.Client.Pages
 
         protected override void OnInitialized()
         {
+            BeforeMessageUpdate = () => Load(id);
             base.OnInitialized();
-            ComponentService.OnMessage += (o, e) =>
-            {
-                if (e == local.Storage.MessageTypeUpdate)
-                {
-                    Load(id);
-                    Update();
-                }
-            };
 
             Load(id);
         }

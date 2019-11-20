@@ -302,6 +302,7 @@ namespace TaskLog.Client.Data
             if (string.IsNullOrWhiteSpace(item.Key) || Reports.FirstOrDefault(x => x.Key == item.Key) == null)
             {
                 Created(item);
+                item.ValueCheck();
                 DataIndex.Reports.Add(item.Key);
                 await Save(DataIndex);
             }

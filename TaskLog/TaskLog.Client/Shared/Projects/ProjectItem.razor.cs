@@ -22,7 +22,8 @@ namespace TaskLog.Client.Shared.Projects
         /// <summary>
         /// 选择的待办事项
         /// </summary>
-        public List<string> SelectedTodos { get; set; } = new List<string>();
+        [Parameter] public List<string> SelectedTodos { get; set; } = new List<string>();
+        [Parameter] public EventCallback<(bool addFlag,string key)> SelectedChanged { get; set; }
         /// <summary>
         /// 勾选模式
         /// </summary>
@@ -135,6 +136,25 @@ namespace TaskLog.Client.Shared.Projects
             local.Storage.Update(dat);
             ExitEditMode();
 
+        }
+
+        public void CheckedUpdate(bool flag,string key)
+        {
+            if (flag)
+            {
+                if (!SelectedTodos.Contains(key))
+                {
+                    SelectedTodos.Add(key);
+                }
+            }
+            else
+            {
+                if (SelectedTodos.Contains(key))
+                {
+                    SelectedTodos.Remove(key);
+                }
+            }
+            SelectedChanged.InvokeAsync((flag,key));
         }
     }
 }

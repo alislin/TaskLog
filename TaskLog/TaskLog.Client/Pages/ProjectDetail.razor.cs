@@ -29,6 +29,7 @@ namespace TaskLog.Client.Pages
 
         protected override void OnInitialized()
         {
+            
             base.OnInitialized();
             ComponentService.OnMessage += (o, e) =>
             {

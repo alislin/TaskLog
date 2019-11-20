@@ -1,4 +1,5 @@
-﻿<StrapCard>
+﻿@inherits TLComponent
+<StrapCard>
     <Header>
         <h5>报告列表</h5>
         <div class="header-elements">
@@ -8,15 +9,14 @@
         </div>
     </Header>
     <ChildContent>
-        <reportMangeList>
-            <month>Month report</month>
-            <week>Week report</week>
-            <week>Week report</week>
-            <week>Week report</week>
-        </reportMangeList>
+        @foreach (var item in Reports)
+        {
+            <ReportItem Report="item"></ReportItem>
+        }
     </ChildContent>
 </StrapCard>
 
 @code {
-    [Inject] LocalService local { get; set; }
+    [Parameter] public List<Report> Reports { get; set; } = new List<Report>();
+
 }

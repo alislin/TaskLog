@@ -29,7 +29,7 @@
             var todo = item;
             var count = local.Storage.TodoLogs.Count(x => x.TodoId == item.Id);
             var countFlag = count == 0;
-            var checkFlag = SelectedTodos.Contains(item.Key);
+            var checkFlag = SelectedTodos?.Contains(item.Key) ?? false;
             <li>
                 <div class="row">
                     <div class="col">
@@ -38,7 +38,7 @@
                             {
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" checked="@checkFlag" />
+                                        <input type="checkbox" class="form-check-input" checked="@checkFlag"  @onchange="@(e=>CheckedUpdate((bool)e.Value,todo.Key))" />
                                         @item.Name
                                     </label>
                                     <span class="badge badge-light badge-pill float-right">@(!countFlag ? count.ToString() : "")</span>

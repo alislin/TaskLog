@@ -22,7 +22,7 @@ namespace TaskLog.Client.Shared.Projects
                 Load(m_Report);
             }
         }
-        protected List<Report> Reports { get; } = new List<Report>();
+        protected List<Report> ChildReports { get; set; } = new List<Report>();
         protected Report m_Report;
 
         protected void Goto(object obj)
@@ -32,7 +32,9 @@ namespace TaskLog.Client.Shared.Projects
 
         protected void Load(Project project)
         {
+            ChildReports = local.Storage.Reports.Where(x => x.ParentKey==project.Key).ToList();
         }
+
 
     }
 }

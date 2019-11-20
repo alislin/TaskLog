@@ -16,19 +16,6 @@
     bool HasItem => local.Storage.IndexProject.DayLogs.Count > 0 || local.Storage.IndexProject.Todos.Count > 0;
     
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        ComponentService.OnMessage += (o, e) =>
-        {
-            if (e == local.Storage.MessageTypeUpdate)
-            {
-                Update();
-            }
-        };
-    }
-
     //protected void Load()
     //{
     //    Todos = local.Storage.Todos.Where(x => local.Storage.IndexProject.Todos.Contains(x.Key)).ToList();

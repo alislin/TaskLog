@@ -12,9 +12,9 @@
     </Header>
     <ChildContent>
         <dl class="mb-0">
-            @foreach (var item in local.Storage.Projects)
+            @foreach (var item in Projects)
             {
-                <ProjectItem Project="item" CheckMode="CheckMode"></ProjectItem>
+                <ProjectItem Project="item" CheckMode="CheckMode" SelectedChanged="UpdateChanged" SelectedTodos="SelectedTodos"></ProjectItem>
             }
             @if (EditMode == 1 && string.IsNullOrWhiteSpace(EditKey))
             {

@@ -15,6 +15,10 @@ namespace TaskLog.DataModel
         {
         }
 
+        public Todo(TodoBase todo) : base(todo)
+        {
+        }
+
         /// <summary>
         /// 项目Id ({项目名称}_{启动年月日})
         /// </summary>

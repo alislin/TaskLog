@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,9 +12,28 @@ namespace TaskLog.Client.Shared.Reports
 {
     public class ReportTodoItemViewBase: TLComponent
     {
-        public ReportItem ReportItem { get; set; }
-        public List<TodoLog> TodoLogs { get; set; }
+        [Parameter] public DataModel.ReportItem ReportItem { get; set; } = new DataModel.ReportItem();
+        [Parameter] public EventCallback<DataModel.ReportItem> ReportItemChanged { get; set; }
+        [Parameter] public EditMode EditMode { get; set; }
+
+        protected List<TodoLog> TodoLogs => LoadLog();
         public SelectOptionContext StatusOption => new SelectOptionContext() { Items = ProjectStatus.Prepare.ToSelect() };
         protected SelectOption SelectedStatus { get; set; } = new SelectOption();
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
+
+        protected void BindValueChanged(object obj)
+        {
+            ReportItemChanged.InvokeAsync(ReportItem);
+            OnBindChanged.InvokeAsync(ReportItem);
+        }
+
+        private List<TodoLog> LoadLog()
+        {
+            return local.Storage.TodoLogs.Where(x => x.TodoId == ReportItem.Id).ToList();
+        }
     }
 }

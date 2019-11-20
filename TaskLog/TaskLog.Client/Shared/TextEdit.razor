@@ -12,23 +12,70 @@
 }
 else
 {
-    <div @ondblclick="EnterMode" @ontouchstart="TouchCheck" @ontouchend="o=>touchFlag=false">@ChildContent</div>
+    <div @ondblclick="EnterMode" @ontouchstart="TouchCheck" @ontouchend="o=>touchFlag=false">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(Text))
+            {
+                @Text
+            }
+            else
+            {
+                <div class="text-muted">@PlaceHolder</div>
+            }
+        }
+    </div>
 }
 
 @code {
+    /// <summary>
+    /// 文本
+    /// </summary>
     [Parameter] public string Text { get; set; }
+    [Parameter] public EventCallback<string> TextChanged { get; set; }
+    /// <summary>
+    /// 用户数据
+    /// </summary>
     [Parameter] public object Data { get; set; }
+    /// <summary>
+    /// 显示行数
+    /// </summary>
     [Parameter] public int Row { get; set; } = 2;
+    /// <summary>
+    /// 是否多行（单行模式 回车 退出，多行模式 Ctrl+回车 退出）
+    /// </summary>
     [Parameter] public bool IsMultiLine { get; set; }
+    /// <summary>
+    /// 双击进入编辑
+    /// </summary>
     [Parameter] public bool IsDoubleClickEnter { get; set; } = true;
+    /// <summary>
+    /// 自动确认
+    /// </summary>
     [Parameter] public bool AutoConfirm { get; set; } = true;
+    /// <summary>
+    /// 占位符
+    /// </summary>
+    [Parameter] public string PlaceHolder { get; set; }
     /// <summary>
     /// 确认提交
     /// </summary>
     [Parameter] public Action<(string text, object data)> Confirm { get; set; }
+    /// <summary>
+    /// 退出方法
+    /// </summary>
     [Parameter] public Action Exit { get; set; }
-
+    /// <summary>
+    /// 编辑模式
+    /// </summary>
     [Parameter] public bool EditMode { get; set; }
+    /// <summary>
+    /// 触摸进入编辑模式时长
+    /// </summary>
     [Parameter] public int TouchTimeout { get; set; } = 1000;
 
     bool touchFlag { get; set; }
@@ -81,7 +128,7 @@ else
                 Text = Text.Substring(0, Text.Length - 1);
             }
         }
-
+        TextChanged.InvokeAsync(Text);
         if (needConfirm)
         {
             needConfirm = false;

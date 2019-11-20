@@ -3,12 +3,23 @@
 @page "/report/view/{key}"
 <StrapCard>
     <Header>
-        <h5>2019年 11月10日 - 11月17日</h5>
+        <h5><TextEdit @bind-Text="Report.Name" PlaceHolder="请输入标题" Confirm="@(e=>BindValueChanged(e.text))"></TextEdit></h5>
         <div class="header-elements">
             <div class="list-icons">
-                <StrapButton>保存</StrapButton>
-                <StrapButton>输出</StrapButton>
-                <StrapButton CommandAction="@(o=>local.NavHelper.NavigateTo("/report"))">关闭</StrapButton>
+                @if (SaveFlag)
+                {
+                    <StrapButton CommandAction="@(o => UpdateReport())" Style="StyleType.warning">保存</StrapButton>
+                }
+                @if (EditMode != EditMode.View)
+                {
+                    <StrapButton CommandAction="@(o=>local.NavHelper.NavigateTo(CloseUrl))">关闭</StrapButton>
+                }
+                else
+                {
+                    <StrapButton>创建子报告</StrapButton>
+                    <StrapButton CommandAction="@(o=>local.NavHelper.NavigateTo($"/report/open/{Key}"))">任务选择</StrapButton>
+                    <StrapButton>输出</StrapButton>
+                }
             </div>
         </div>
     </Header>
@@ -18,21 +29,28 @@
                 <span class="input-group-prepend">
                     <span class="input-group-text">开始日期</span>
                 </span>
-                <input type="datetime" class="form-control" placeholder="开始日期">
+                <input type="datetime" class="form-control" placeholder="开始日期" @bind="@Report.Start" />
             </div>
             <div class="input-group col">
                 <span class="input-group-prepend">
                     <span class="input-group-text">结束日期</span>
                 </span>
-                <input type="datetime" class="form-control" placeholder="结束日期">
+                <input type="datetime" class="form-control" placeholder="结束日期" @bind="@Report.End" />
             </div>
+            <div class="col">周期选择</div>
         </div>
-
-        <ReportTodoItemView>日志记录整理</ReportTodoItemView>
-        <ReportTodoItemView>入口点整理</ReportTodoItemView>
-        <ReportTodoItemView>收费项目合并</ReportTodoItemView>
-
+        @for (int i = 0; i < ReportItems.Count; i++)
+        {
+            var index = i;
+            <ReportTodoItemView @bind-ReportItem="ReportItems[index]" EditMode="EditMode" OnBindChanged="BindValueChanged">@ReportItems[index].Name</ReportTodoItemView>
+        }
     </ChildContent>
 </StrapCard>
 @code {
+    protected string CloseUrl => GetCloseUrl();
+
+    private string GetCloseUrl()
+    {
+        return string.IsNullOrWhiteSpace(Key) ? "/report" : $"/report/view/{Key}";
+    }
 }

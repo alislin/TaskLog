@@ -1,9 +1,9 @@
 ﻿@layout BaseLayout
-@inherits LayoutComponentBase
+@inherits BaseLayout
 
 <div class="d-md-flex align-items-md-start">
     <SideBar>
-        <ReportList></ReportList>
+        <ReportList Reports="@(local.Storage.Reports.Where(x => string.IsNullOrWhiteSpace(x.ParentKey)).ToList())"></ReportList>
     </SideBar>
     <div class="w-100 h-100">
         @Body
