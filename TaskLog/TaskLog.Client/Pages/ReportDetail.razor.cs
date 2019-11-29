@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TaskLog.Client.Models;
 using TaskLog.Client.Shared;
 using TaskLog.DataModel;
 using Thunder.Standard.Lib.Extension;
