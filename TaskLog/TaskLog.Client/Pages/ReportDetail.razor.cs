@@ -1,11 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskLog.Client.Shared;
 using TaskLog.DataModel;
 using Thunder.Standard.Lib.Extension;
+using Npoi.Mapper;
+using TaskLog.Client.Models;
 
 namespace TaskLog.Client.Pages
 {
@@ -97,5 +102,28 @@ namespace TaskLog.Client.Pages
             report.NeedSave = true;
             OnBindChanged.InvokeAsync(Report);
         }
+
+        /// <summary>
+        /// 导出
+        /// </summary>
+        protected async void Export()
+        {
+            using MemoryStream stream = new MemoryStream();
+            var tlreport = report.ToTLReport();
+            var mapper = new Mapper();
+            //mapper.Map<TLReportItem>(1, x => x.Index)
+            //      .Map<TLReportItem>(3, x => x.TodoName)
+            //      .Map<TLReportItem>(4, x => x.PlanEnd)
+            //      .Map<TLReportItem>(5, x => x.OpenContent)
+            //      .Map<TLReportItem>(6, x => x.Point)
+            //      .Map<TLReportItem>(7, x => x.Report);
+            //mapper.Format<TLReportItem>("yyyy/MM/dd", x => x.PlanEnd);
+            mapper.Put(tlreport.Items, tlreport.Name);
+            mapper.Save(stream);
+
+            await local.SaveAs($"{report.Name}.xlsx", stream.ToArray());
+        }
     }
+
+
 }

@@ -34,6 +34,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Npoi.Mapper" Version="3.3.0" />
     <PackageReference Include="Thunder.Blazor.Bootstrap" Version="1.0.3" />
   </ItemGroup>
 
@@ -61,10 +62,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\tasklog.app.js.map" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

@@ -6,9 +6,10 @@
         <div class="header-elements">
             <div class="list-icons">
                 @*<EditForm Model="ReportItem">
-                    <InputNumber Value="50" class="form-control"></InputNumber>
-                </EditForm>*@
+            <InputNumber Value="50" class="form-control"></InputNumber>
+        </EditForm>*@
                 <input type="number" @bind="ReportItem.Point" class="form-control" />
+                <input type="date" @bind="ReportItem.End" class="form-control" placeholder="完成日期" />
                 <ThunderSelect DataContext="StatusOption" @bind-SelectedItem="SelectedStatus" OnBindChanged="BindValueChanged" StyleClass="form-control"></ThunderSelect>
             </div>
         </div>

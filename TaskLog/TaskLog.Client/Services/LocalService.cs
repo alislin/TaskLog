@@ -7,7 +7,10 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using TaskLog.Client.Data;
+using TaskLog.Client.Libs;
 using TaskLog.DataModel;
 using Thunder.Blazor.Services;
 
@@ -42,6 +45,17 @@ namespace TaskLog.Client.Services
         {
             //JSRuntime.InvokeAsync<object>("ThunderBlazor.tasklogApp.highlight", null);
             System.Console.WriteLine("highlight.js loaded.");
+        }
+
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="buf"></param>
+        /// <returns></returns>
+        public async Task SaveAs(string filename, byte[] buf)
+        {
+            await FileUtil.SaveAs(JSRuntime, filename, buf);
         }
 
     }

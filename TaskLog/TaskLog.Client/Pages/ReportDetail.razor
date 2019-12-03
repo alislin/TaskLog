@@ -18,7 +18,7 @@
                 {
                     <StrapButton>创建子报告</StrapButton>
                     <StrapButton CommandAction="@(o=>local.NavHelper.NavigateTo($"/report/open/{Key}"))">任务选择</StrapButton>
-                    <StrapButton>输出</StrapButton>
+                    <StrapButton CommandAction="@(o=>Export())">输出</StrapButton>
                 }
             </div>
         </div>
@@ -29,13 +29,13 @@
                 <span class="input-group-prepend">
                     <span class="input-group-text">开始日期</span>
                 </span>
-                <input type="datetime" class="form-control" placeholder="开始日期" @bind="@Report.Start" />
+                <input type="date" class="form-control" placeholder="开始日期" @bind="@Report.Start" />
             </div>
             <div class="input-group col">
                 <span class="input-group-prepend">
                     <span class="input-group-text">结束日期</span>
                 </span>
-                <input type="datetime" class="form-control" placeholder="结束日期" @bind="@Report.End" />
+                <input type="date" class="form-control" placeholder="结束日期" @bind="@Report.End" />
             </div>
             <div class="col">周期选择</div>
         </div>
