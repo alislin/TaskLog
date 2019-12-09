@@ -108,6 +108,18 @@ namespace TaskLog.Client.Pages
         /// </summary>
         protected async void Export()
         {
+            // 表头
+            var headerRowCount = 4;
+            // 数据行
+            var dataRow = 5;
+            // 表脚
+            var footerRow = 6;
+
+            var headerStream = new MemoryStream(TaskLog.Client.Properties.Resources.dataTemplate);
+
+            IWorkbook workbookHeader = new XSSFWorkbook(headerStream);
+            ISheet sheetHeader = workbookHeader.GetSheetAt(0);
+
             using MemoryStream stream = new MemoryStream();
             var tlreport = report.ToTLReport();
             var mapper = new Mapper();
@@ -119,7 +131,103 @@ namespace TaskLog.Client.Pages
             //      .Map<TLReportItem>(7, x => x.Report);
             //mapper.Format<TLReportItem>("yyyy/MM/dd", x => x.PlanEnd);
             mapper.Put(tlreport.Items, tlreport.Name);
-            mapper.Save(stream);
+            var workbook = mapper.Workbook;
+
+            for (short i = 0; i < workbookHeader.NumberOfFonts; i++)
+            {
+                var font = workbook.CreateFont();
+                var src = workbookHeader.GetFontAt(i);
+                if (src != null)
+                {
+                    font = src;
+                }
+            }
+
+            //复制样式
+            for (short i = 0; i < workbookHeader.NumCellStyles; i++)
+            {
+                var style = workbook.CreateCellStyle();
+                var src = workbookHeader.GetCellStyleAt(i);
+                if (src != null)
+                {
+                    style = src;
+                    //style.CloneStyleFrom(src);
+                }
+                
+            }
+
+            
+
+            var dataSheet = workbook.GetSheet(tlreport.Name);
+            //数据下移
+            dataSheet.ShiftRows(1, tlreport.Items.Count + 1, headerRowCount - 1, true, false);
+            
+
+            //合并单元格
+            for (int i = 0; i < sheetHeader.NumMergedRegions; i++)
+            {
+                dataSheet.AddMergedRegion(sheetHeader.GetMergedRegion(i));
+            }
+
+            //插入模板头部
+            for (int i = 0; i < headerRowCount; i++)
+            {
+                var rowInsert = dataSheet.CreateRow(i);
+                var rowHeader = sheetHeader.GetRow(i);
+                if (rowHeader.RowStyle != null)
+                {
+                    rowInsert.RowStyle.CloneStyleFrom(rowHeader.RowStyle);
+                }
+                for (int col = 0; col < rowHeader.LastCellNum; col++)
+                {
+                    var cellHeader = rowHeader.GetCell(col);
+                    var cellInsert = rowInsert.CreateCell(col,cellHeader.CellType);
+                    if (cellHeader.CellStyle != null)
+                    {
+                        cellInsert.CellStyle.CloneStyleFrom(cellHeader.CellStyle);
+                    }
+                    cellInsert.SetCellValue(cellHeader.StringCellValue);
+                    dataSheet.SetColumnWidth(col, sheetHeader.GetColumnWidth(col));
+                    dataSheet.SetDefaultColumnStyle(col, sheetHeader.GetColumnStyle(col));
+                }
+            }
+            //设置样式
+            //var rowData = sheetHeader.GetRow(dataRow);
+            //for (int i = headerRowCount; i < dataSheet.LastRowNum; i++)
+            //{
+            //    var row = dataSheet.GetRow(i);
+            //    row.RowStyle = rowData.RowStyle;
+            //    for (int col = 0; col < row.LastCellNum; col++)
+            //    {
+            //        var cell = row.GetCell(col);
+            //        if (cell==null)
+            //        {
+            //            continue;
+            //        }
+            //        var cellHeader = rowData.GetCell(col);
+            //        if (cellHeader.CellStyle != null)
+            //        {
+            //            cell.CellStyle.CloneStyleFrom(cellHeader.CellStyle);
+            //        }
+            //    }
+            //}
+            //添加合计
+            //var rowFooter = sheetHeader.GetRow(footerRow);
+            //var footer = dataSheet.CreateRow(dataSheet.LastRowNum);
+            //footer.RowStyle = rowFooter.RowStyle;
+            //for (int col = 0; col < rowFooter.LastCellNum; col++)
+            //{
+            //    var cell = footer.CreateCell(col);
+            //    var cellFooter = rowFooter.GetCell(col);
+            //    if (cellFooter.CellStyle != null)
+            //    {
+            //        cell.CellStyle.CloneStyleFrom(cellFooter.CellStyle);
+            //    }
+            //    cell.SetCellValue(cellFooter.StringCellValue);
+            //}
+
+            workbook.Write(stream);
+            //mapper.Save(stream);
 
             await local.SaveAs($"{report.Name}.xlsx", stream.ToArray());
         }
