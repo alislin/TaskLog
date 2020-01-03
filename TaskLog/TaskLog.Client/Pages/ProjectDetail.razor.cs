@@ -13,7 +13,7 @@ using Thunder.Blazor.Components;
 
 namespace TaskLog.Client.Pages
 {
-    public class ProjectDetailBase : TComponent<ProjectDetailContext>
+    public partial class ProjectDetail : TComponent<ProjectDetailContext>
     {
         private string id;
 

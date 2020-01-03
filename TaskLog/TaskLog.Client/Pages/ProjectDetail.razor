@@ -1,5 +1,5 @@
 ﻿@page "/project/{Id}"
-@inherits ProjectDetailBase
+@inherits TComponent<ProjectDetailContext>
 <StrapCard>
     <Header>
         <TextEdit Text="@DataContext?.Project?.Name" Data="@DataContext?.Project?.Key" Confirm="@UpdateText">
